@@ -1,11 +1,11 @@
 import React from "react";
+import { Hero } from "./sections/Hero.jsx";
 
 const App = () => {
     return (
-        <main>
-            <h1>Alok Prasad</h1>
-            <p>Full Stack Developer</p>
-        </main>
+        <>
+            <Hero />
+        </>
     );
 };
 
