@@ -168,7 +168,7 @@ const MoonScene: React.FC = () => {
       moon.rotation.y += 0.0004;
       moon.rotation.y += (targetRotY - moon.rotation.y) * 0.05;
       moon.rotation.x += (targetRotX - moon.rotation.x) * 0.05;
-      stars.rotation.y += 0.00005;
+      stars.rotation.y += 0.0025;
       renderer.render(scene, camera);
       frameId = requestAnimationFrame(animate);
     };

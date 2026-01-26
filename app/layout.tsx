@@ -32,8 +32,7 @@ export default function RootLayout({
         <div className="fixed inset-0 top-0 z-[0] min-h-screen w-full pointer-events-none overflow-hidden">
           <MoonScene/>
         </div>
-
-        <Navbar />
+          <Navbar />
         <main className="relative z-10 min-h-screen w-full">
           {children}
         </main>
