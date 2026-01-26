@@ -11,7 +11,7 @@ export default function HeroExperience() {
 
 
     return (
-        <Canvas camera={{ position: [10, 10, 15], fov: 45 }}>
+        <Canvas camera={{ position: [10, 10, 15], fov: 35 }}>
             <HeroLight />
             <OrbitControls
                 enablePan={false}
@@ -22,7 +22,7 @@ export default function HeroExperience() {
                 maxPolarAngle={Math.PI / 2}
             />
 
-            <group scale={isMobile ? 1.4 : 2} position={[0, -3.5, 0]} rotation={[0, -Math.PI / 4, 0]}>
+            <group scale={isMobile ? 1.4 : 2} position={[0, -3.5, 0]} rotation={[0, Math.PI / 4, 0]}>
                 <Bumblebee />
             </group>
         </Canvas>

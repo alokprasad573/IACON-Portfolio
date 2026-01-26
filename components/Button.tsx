@@ -1,6 +1,5 @@
 'use client'
 
-import Link from "next/link";
 import { useGSAP } from "@gsap/react";
 import gsap from 'gsap';
 
@@ -12,7 +11,7 @@ interface ButtonProps {
 
 const Button = ({ className, id, text }: ButtonProps) => {
 
-      useGSAP(() => {
+    useGSAP(() => {
         gsap.fromTo('.cta-button', {
             opacity: 0,
             y: 50,
@@ -25,7 +24,8 @@ const Button = ({ className, id, text }: ButtonProps) => {
     })
 
     return (
-        <a onClick={(e) => {e.preventDefault();
+        <a onClick={(e) => {
+            e.preventDefault();
 
             const target = document.getElementById('counter');
             if (target && id) {
@@ -33,8 +33,8 @@ const Button = ({ className, id, text }: ButtonProps) => {
                 const top = target.getBoundingClientRect().top + window.scrollY - offset;
                 window.scrollTo({ top, behavior: 'smooth' });
             }
-         }}
-         className={`${className ?? ''} cta-wrapper`} id={id}>
+        }}
+            className={`${className ?? ''} cta-wrapper`} id={id}>
             <div className="cta-button group">
                 <div className="bg-circle" />
                 <p className="text">{text}</p>

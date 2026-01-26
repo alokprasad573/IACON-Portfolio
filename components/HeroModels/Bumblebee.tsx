@@ -49,7 +49,7 @@ export default function Bumblebee(props: React.ComponentProps<'group'> & { actio
   const { actions } = useAnimations(animations, group)
 
   const [index, setIndex] = useState(0)
-  const allActions: ActionName[] = ['vehicle_idle01', 'idle01', 'transform_v', 'emo_joyful', 'emo_rage', 'emo_sad', 'emo_stagger', 'emo_surprise', 'dash']
+  const allActions: ActionName[] = ['vehicle_idle01','idle01', 'emo_joyful', 'emo_rage', 'emo_sad', 'emo_stagger', 'emo_surprise', 'dash']
 
   // Cycle animations every 3 seconds
   useEffect(() => {
@@ -74,6 +74,7 @@ export default function Bumblebee(props: React.ComponentProps<'group'> & { actio
       }
     }
   }, [actions, props.action, index])
+
 
   return (
     <group ref={group} {...props} dispose={null}>
