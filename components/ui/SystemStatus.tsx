@@ -21,7 +21,7 @@ const SystemStatus = () => {
     return (
         <div className="fixed bottom-8 left-8 z-50 flex items-center cursor-default select-none pointer-events-none system-animate">
             <div className="flex gap-1 h-4 items-end">
-                <div className="w-4 h-4 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_#22c55e]"></div>
+                <div className="w-4 h-4 rounded-full bg-green-500 animate-pulse shadow-[2_2_40px_#22c55e]"></div>
                 <div className="w-1 bg-[#FFD700] animate-[bounce_1s_infinite]"></div>
                 <div className="w-1 bg-[#FFD700] animate-[bounce_0.6s_infinite]"></div>
                 <div className="w-1 bg-[#FFD700] animate-[bounce_0.8s_infinite]"></div>
