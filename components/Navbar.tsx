@@ -12,13 +12,10 @@ const Navbar = () => {
             {!isOpen && (
                 <button
                     onClick={() => setIsOpen(!isOpen)}
-                    className="group fixed top-4 left-4 z-50 p-3 rounded-lg bg-white/10 backdrop-blur-md border border-white/5 text-white"
+                    className="group fixed top-8 left-8 z-50 p-3 rounded bg-white/10 backdrop-blur-md border border-white/20 text-white transition-all hover:bg-[#FFD700] hover:text-black"
                 >
-                    <span className="group-hover:hidden text-white">
+                    <span className="text-xl">
                         <FontAwesomeIcon icon={faBars} />
-                    </span>
-                    <span className="hidden group-hover:inline-block  font-bold">
-                        <FontAwesomeIcon icon={faBars} /> Menu
                     </span>
                 </button>
             )}

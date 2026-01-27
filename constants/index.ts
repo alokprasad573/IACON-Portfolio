@@ -42,3 +42,8 @@ const certificates = [
 ]
 
 
+{/* <img
+            src="https://pngimg.com/uploads/transformers/transformers_PNG15.png"
+            alt="Bumblebee Transformer"
+            className="w-full max-w-[500px] transformer-img relative z-10 drop-shadow-[0_20px_50px_rgba(255,214,0,0.3)] transition-transform duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] group-hover:scale-105 group-hover:rotate-2"
+          /> */}

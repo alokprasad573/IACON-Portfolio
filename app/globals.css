@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -38,6 +38,10 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --font-geist-sans: 'Geist Sans', sans-serif;
+  --font-geist-mono: 'Geist Mono', monospace;
+  --bumblebee-yellow: #FFD700;
+  --deep-space: #050505;
 }
 
 html,
@@ -46,8 +50,8 @@ body {
   overflow-x: hidden;
   background-color: black;
   color: white;
+  font-family: 'Orbitron', var(--font-geist-sans);
   scroll-behavior: smooth;
-  font-family: "Mona Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 16px;
@@ -59,7 +63,6 @@ section {
 }
 
 @theme {
-  --font-sans: "Mona Sans", sans-serif;
   --color-white-50: #d9ecff;
   --color-black-50: #1c1c21;
   --color-black-100: #0e0e10;
@@ -76,6 +79,76 @@ section {
   .flex-col-center {
     @apply flex flex-col justify-center items-center;
   }
+
+  .yellow-glow {
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+  }
+
+  .grid-overlay {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .cursor-blink {
+    display: inline-block;
+    width: 10px;
+    height: 40px;
+    background-color: var(--bumblebee-yellow);
+    margin-left: 10px;
+    animation: blink 0.8s infinite;
+    vertical-align: middle;
+  }
+
+  @keyframes blink {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0;
+    }
+  }
+
+  .grid-overlay {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .cursor-blink {
+    display: inline-block;
+    width: 10px;
+    height: 40px;
+    background-color: var(--bumblebee-yellow);
+    margin-left: 10px;
+    animation: blink 0.8s infinite;
+    vertical-align: middle;
+  }
+
+  @keyframes blink {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0;
+    }
+  }
 }
 
 @layer components {
@@ -88,22 +161,23 @@ section {
     @apply flex flex-col justify-center md:text-[50px] text-[30px] font-semibold relative z-10 pointer-events-none
   }
 
- 
 
-/* Tailwind + Custom positioning */
-.circle-position {
-  @apply absolute z-20 pointer-events-none;
-  bottom: 20%;
-  right: 20%;
-  transform: translate(50%, 50%);
-  @apply w-[100vw] h-[50vh] flex items-end justify-end;
 
-  /* Large screens */
-  @apply lg:w-[50vw] lg:h-[80vh] lg:bottom-[40%] lg:right-[20%];
-}
-.circle-position > * {
-  @apply pointer-events-auto;
-}
+  /* Tailwind + Custom positioning */
+  .circle-position {
+    @apply absolute z-20 pointer-events-none;
+    bottom: 20%;
+    right: 20%;
+    transform: translate(50%, 50%);
+    @apply w-[100vw] h-[50vh] flex items-end justify-end;
+
+    /* Large screens */
+    @apply lg:w-[50vw] lg:h-[80vh] lg:bottom-[40%] lg:right-[20%];
+  }
+
+  .circle-position>* {
+    @apply pointer-events-auto;
+  }
 }
 
 .cta-wrapper {
@@ -214,5 +288,13 @@ section {
 
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Apply Orbitron font to code elements */
+  code,
+  kbd,
+  samp,
+  pre {
+    font-family: 'Orbitron', monospace;
   }
 }

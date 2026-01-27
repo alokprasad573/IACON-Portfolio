@@ -1,18 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import MoonScene from "@/components/ui/MoonScene";
-import Navbar from "@/components/Navbar";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import GridOverlay from "@/components/ui/GridOverlay";
+import SystemStatus from "@/components/ui/SystemStatus";
 
 export const metadata: Metadata = {
   title: "My Portfolio",
@@ -26,13 +16,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body>
         <div className="fixed inset-0 top-0 z-[0] min-h-screen w-full pointer-events-none overflow-hidden">
-          <MoonScene/>
+          <MoonScene />
         </div>
-          <Navbar />
+        <GridOverlay />
+        <SystemStatus />
         <main className="relative z-10 min-h-screen w-full">
           {children}
         </main>
