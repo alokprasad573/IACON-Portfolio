@@ -4,7 +4,7 @@ const DetailPanel = ({ isVerified }) => {
     if (!isVerified) return null;
 
     return (
-        <div className="mb-6 p-4 bg-yellow-400/5 border border-yellow-400/10 animate-[slideUp_0.6s_ease-out]">
+        <div className="mb-4 p-4 bg-yellow-400/5 border border-yellow-400/10">
             <div className="grid grid-cols-2 gap-y-4 gap-x-8">
                 {[
                     { label: 'Designation', value: 'SCOUT', icon: <Cpu size={10} /> },

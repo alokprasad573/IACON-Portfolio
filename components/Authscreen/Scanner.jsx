@@ -1,5 +1,5 @@
 
-const Scanner = ({isVerified, authState, glyphText}) => {
+const Scanner = ({isVerified, glyphText}) => {
 
     if(isVerified) return null;
 
@@ -11,11 +11,11 @@ const Scanner = ({isVerified, authState, glyphText}) => {
             />
 
             <div className="absolute inset-2 border border-dotted border-current rounded-full opacity-20 animate-[spin_25s_linear_infinite]" />
-            <div className="absolute inset-8 border-2 border-double border-current rounded-full opacity-20 animate-[spin_15s_linear_reverse_infinite]" />
+            <div className="absolute inset-8 border-2 border-double border-current rounded-full opacity-20 animate-spin" style={{ animationDuration: '25s'}} />
             <div className="absolute inset-16 border border-current rounded-full opacity-10" />
 
     
-                <div className="absolute w-[120%] h-1 bg-gradient-to-r from-transparent via-current to-transparent shadow-[0_0_20px_currentColor] opacity-80 z-10 animate-[scan_2.5s_ease-in-out_infinite]" />
+                <div className="absolute w-[120%] h-1 bg-linear-to-r from-transparent via-current to-transparent shadow-[0_0_20px_currentColor] opacity-80 z-10 animate-[scan_2.5s_ease-in-out_infinite]" />
 
             <div className="text-3xl font-black tracking-[0.2em] drop-shadow-[0_0_10px_currentColor] opacity-90 text-center">
                 {glyphText}
