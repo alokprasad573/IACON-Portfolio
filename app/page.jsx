@@ -113,7 +113,18 @@ const Main = () => {
                 <div ref={finalContainerRef} className="w-full h-full flex items-center justify-center p-4">
                     <CyberFrame screenRef={screenRef} accentColor={accentColor} glowLevel="50">
                         <div className="p-8">
-                            <MainContent props={props} />
+
+                            {/* "Right Content" */}
+                            <MainContent props={props} /> 
+
+                            {/* {"Left Content appear isVerified === VERIFIED"}
+                            {isVerified && (
+                                <div>
+                                    <HeroExperience />
+                                    {/* Autobots Telemtry Like:- Enerzone level, CPU,T-Cog status, memory, tepm, System Stabilty
+                                </div>
+                            )} */}
+
                         </div>
                     </CyberFrame>
                 </div>
