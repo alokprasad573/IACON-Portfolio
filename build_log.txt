@@ -1,0 +1,129 @@
+
+> my-portfolio@0.1.0 build
+> next build
+
+▲ Next.js 16.1.4 (Turbopack)
+
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 6 errors:
+./app/page.jsx:5:1
+Module not found: Can't resolve '@/components/HeroModels/HeroExperience'
+  3 | import { useGSAP } from "@gsap/react";
+  4 | import gsap from 'gsap';
+> 5 | import HeroExperience from "@/components/HeroModels/HeroExperience";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import CyberTerminal from "@/components/ui/CyberTerminal";
+  7 |
+  8 | export default function Home() {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./app/page.jsx [Client Component Browser]
+    ./app/page.jsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.jsx [Client Component SSR]
+    ./app/page.jsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./app/page.jsx:6:1
+Module not found: Can't resolve '@/components/ui/CyberTerminal'
+  4 | import gsap from 'gsap';
+  5 | import HeroExperience from "@/components/HeroModels/HeroExperience";
+> 6 | import CyberTerminal from "@/components/ui/CyberTerminal";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 |
+  8 | export default function Home() {
+  9 |   useGSAP(() => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./app/page.jsx [Client Component Browser]
+    ./app/page.jsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.jsx [Client Component SSR]
+    ./app/page.jsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./app/layout.jsx:3:1
+Module not found: Can't resolve '@/components/ui/GridOverlay'
+  1 | import "./globals.css";
+  2 | import MoonScene from "@/components/ui/MoonScene";
+> 3 | import GridOverlay from "@/components/ui/GridOverlay";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 | import SystemStatus from "@/components/ui/SystemStatus";
+  5 | import { SystemProvider } from "@/context/SystemContext";
+  6 |
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./app/layout.jsx:2:1
+Module not found: Can't resolve '@/components/ui/MoonScene'
+  1 | import "./globals.css";
+> 2 | import MoonScene from "@/components/ui/MoonScene";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  3 | import GridOverlay from "@/components/ui/GridOverlay";
+  4 | import SystemStatus from "@/components/ui/SystemStatus";
+  5 | import { SystemProvider } from "@/context/SystemContext";
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./app/layout.jsx:4:1
+Module not found: Can't resolve '@/components/ui/SystemStatus'
+  2 | import MoonScene from "@/components/ui/MoonScene";
+  3 | import GridOverlay from "@/components/ui/GridOverlay";
+> 4 | import SystemStatus from "@/components/ui/SystemStatus";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import { SystemProvider } from "@/context/SystemContext";
+  6 |
+  7 | export const metadata = {
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./app/layout.jsx:5:1
+Module not found: Can't resolve '@/context/SystemContext'
+  3 | import GridOverlay from "@/components/ui/GridOverlay";
+  4 | import SystemStatus from "@/components/ui/SystemStatus";
+> 5 | import { SystemProvider } from "@/context/SystemContext";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 |
+  7 | export const metadata = {
+  8 |   title: "My Portfolio",
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (./app/page.jsx:5:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./app/page.jsx:6:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./app/layout.jsx:3:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./app/layout.jsx:2:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./app/layout.jsx:4:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./app/layout.jsx:5:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)

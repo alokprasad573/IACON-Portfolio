@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import React from 'react';
 
 const HeroLight = () => {
     // Target aimed at the model's position
