@@ -1,74 +1,245 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;800&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* 
+  --------------------------------------------------------------------------
+  CYBERTRONIAN DESIGN SYSTEM (Tailwind v4)
+  --------------------------------------------------------------------------
+*/
 
-:root {
-  --gradient: radial-gradient(circle, #e5e5e5 0%, #fff 100%);
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-  --font-geist-sans: 'Geist Sans', sans-serif;
-  --font-geist-mono: 'Geist Mono', monospace;
-  --bumblebee-yellow: #FFD700;
-  --deep-space: #050505;
+@theme {
+  /* Colors */
+  --color-brand-yellow: #FFD700;
+  --color-brand-cyan: #00F3FF;
+  --color-bg-deep: #050505;
+  --color-bg-card: rgba(8, 8, 8, 0.9);
+
+  /* Typography */
+  --font-orbitron: "Orbitron", sans-serif;
+  --font-inter: "Inter", sans-serif;
+
+  /* Animations */
+  --animate-scanline: scanline 8s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-glitch: glitch 0.5s steps(2, start) infinite;
+  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-html,
-body {
-  width: 100dvw;
-  overflow-x: hidden;
-  background-color: black;
-  color: white;
-  font-family: 'Orbitron', var(--font-geist-sans) !important;
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-size: 16px;
+/* 
+  --------------------------------------------------------------------------
+  BASE STYLES & RESETS
+  --------------------------------------------------------------------------
+*/
+@layer base {
+  :root {
+    --background: 0 0% 2%;
+    --foreground: 0 0% 98%;
+    --primary: 48 100% 50%;
+    --primary-foreground: 48 100% 10%;
+    --radius: 0.75rem;
+  }
+
+  html {
+    @apply scroll-smooth antialiased;
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-bg-deep text-white/90 font-inter min-h-screen overflow-x-hidden selection:bg-brand-yellow selection:text-black;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-orbitron {
+    @apply font-orbitron uppercase tracking-tighter italic font-black;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-black/20;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-brand-yellow/30 rounded-full hover:bg-brand-yellow/60 transition-colors;
+  }
 }
 
-@keyframes scan {
+/* 
+  --------------------------------------------------------------------------
+  ADVANCED UTILITIES & COMPONENTS
+  --------------------------------------------------------------------------
+*/
+@layer components {
+
+  /* Glassmorphism with Cyber Glow */
+  .cyber-glass {
+    @apply bg-black/60 backdrop-blur-2xl border border-white/5 relative overflow-hidden transition-all duration-500;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  }
+
+  .cyber-glass:hover {
+    @apply border-brand-yellow/20 bg-black/80;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.05);
+  }
+
+  /* Animated Border Glow */
+  .glow-border {
+    @apply relative after:absolute after:inset-0 after:border after:border-brand-yellow/0 after:transition-all after:duration-500 hover:after:border-brand-yellow/30 hover:after:shadow-[0_0_15px_#FFD70022];
+  }
+
+  /* Scanline Overlay Utility */
+  .scanline {
+    @apply absolute inset-0 pointer-events-none overflow-hidden z-[100];
+    background: linear-gradient(to bottom,
+        rgba(255, 215, 0, 0) 0%,
+        rgba(255, 215, 0, 0.03) 50%,
+        rgba(255, 215, 0, 0) 100%);
+    background-size: 100% 8px;
+    animation: scanline-move 10s linear infinite;
+  }
+
+  /* Matrix-like Shimmer */
+  .cyber-shimmer {
+    @apply relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-white/5 before:to-transparent before:animate-[shimmer_2s_infinite];
+  }
+}
+
+/* 
+  --------------------------------------------------------------------------
+  KEYFRAMES & ANIMATIONS
+  --------------------------------------------------------------------------
+*/
+@keyframes scanline-move {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 0 100%;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes glitch {
+  0% {
+    clip-path: inset(40% 0 61% 0);
+  }
+
+  20% {
+    clip-path: inset(92% 0 1% 0);
+  }
+
+  40% {
+    clip-path: inset(43% 0 1% 0);
+  }
+
+  60% {
+    clip-path: inset(25% 0 58% 0);
+  }
+
+  80% {
+    clip-path: inset(54% 0 7% 0);
+  }
+
+  100% {
+    clip-path: inset(58% 0 43% 0);
+  }
+}
+
+@keyframes float {
 
   0%,
   100% {
-    top: 10%;
+    transform: translateY(0) rotate(0);
   }
 
   50% {
-    top: 90%;
+    transform: translateY(-15px) rotate(0.5deg);
   }
 }
 
-@keyframes slideUp {
+/* 
+  --------------------------------------------------------------------------
+  SCROLL-DRIVEN ANIMATIONS (View Timeline)
+  --------------------------------------------------------------------------
+*/
+@supports (view-timeline-name: --layer) {
+  .scroll-layer {
+    view-timeline-name: --layer;
+    view-timeline-axis: block;
+    perspective: 1000px;
+  }
+
+  /* CRT Reveal Animation */
+  .crt-reveal {
+    animation: crt-expand linear both;
+    animation-timeline: --layer;
+    animation-range: entry 0% entry 100%;
+    transform-origin: center;
+  }
+
+  /* Stack Shrink Animation */
+  .layer-shrink {
+    animation: stack-shrink linear both;
+    animation-timeline: --layer;
+    animation-range: exit 0% exit 100%;
+  }
+
+  /* Revelation Content Fade */
+  .revelation-content {
+    animation: fade-up linear both;
+    animation-timeline: --layer;
+    animation-range: entry 70% entry 100%;
+  }
+}
+
+@keyframes crt-expand {
+  0% {
+    transform: scaleX(0) scaleY(0.001);
+    opacity: 0;
+    filter: brightness(5) contrast(2);
+  }
+
+  45% {
+    transform: scaleX(1) scaleY(0.001);
+    opacity: 1;
+    filter: brightness(3);
+  }
+
+  100% {
+    transform: scaleX(1) scaleY(1);
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+@keyframes stack-shrink {
+  0% {
+    transform: scale(1) translateZ(0);
+    opacity: 1;
+    filter: blur(0px) brightness(1);
+  }
+
+  100% {
+    transform: scale(0.85) translateZ(-100px) translateY(-50px);
+    opacity: 0;
+    filter: blur(10px) brightness(0.1);
+  }
+}
+
+@keyframes fade-up {
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -80,71 +251,9 @@ body {
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes drift {
-  0% {
-    transform: translate(0, 0);
-  }
-
-  50% {
-    transform: translate(30px, -20px);
-  }
-
-  100% {
-    transform: translate(0, 0);
-  }
-}
-
-@keyframes float {
-
-  0%,
-  100% {
-    transform: translateY(0) scale(1);
-    opacity: 0.3;
-  }
-
-  50% {
-    transform: translateY(-40px) scale(1.2);
-    opacity: 0.6;
-  }
-}
-
-
-.scanline {
-  width: 100%;
-  height: 2vh;
-  z-index: 10;
-  opacity: 1;
-  position: absolute;
-  top: -15vh;
-  left: 0;
-  pointer-events: none;
-  animation: scanline 8s linear infinite;
-}
-
-@keyframes scanline {
-  0% {
-    top: -15vh;
-  }
-
-  100% {
-    top: 100vh;
-  }
-}
-
-/* Apply Orbitron font to code elements */
-code,
-kbd,
-samp,
-pre {
-  font-family: 'Orbitron', monospace;
+/* Hardware Acceleration Class */
+.accelerated {
+  will-change: transform, opacity, filter;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
