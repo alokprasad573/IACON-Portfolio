@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -15,12 +15,14 @@
   --color-bg-deep: #050505;
   --color-bg-card: rgba(8, 8, 8, 0.9);
 
-  /* Typography */
+  /* Typography - Forced Global Orbitron */
   --font-orbitron: "Orbitron", sans-serif;
-  --font-inter: "Inter", sans-serif;
+  --font-sans: "Orbitron", sans-serif;
+  --font-mono: "Orbitron", sans-serif;
+  --font-serif: "Orbitron", sans-serif;
 
   /* Animations */
-  --animate-scanline: scanline 8s linear infinite;
+  --animate-scanline: scanline-move 8s linear infinite;
   --animate-float: float 6s ease-in-out infinite;
   --animate-glitch: glitch 0.5s steps(2, start) infinite;
   --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
@@ -40,21 +42,28 @@
     --radius: 0.75rem;
   }
 
-  html {
-    @apply scroll-smooth antialiased;
-    color-scheme: dark;
-  }
-
+  html,
   body {
-    @apply bg-bg-deep text-white/90 font-inter min-h-screen overflow-x-hidden selection:bg-brand-yellow selection:text-black;
+    @apply bg-bg-deep text-white/90 min-h-screen overflow-x-hidden selection:bg-brand-yellow selection:text-black;
+    @apply scroll-smooth antialiased font-orbitron uppercase;
+    color-scheme: dark;
   }
 
   h1,
   h2,
   h3,
   h4,
-  .font-orbitron {
-    @apply font-orbitron uppercase tracking-tighter italic font-black;
+  h5,
+  h6 {
+    @apply italic font-black tracking-tighter;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+  }
+
+  p,
+  a,
+  span,
+  div {
+    @apply font-medium;
   }
 
   /* Custom Scrollbar */
@@ -96,19 +105,20 @@
 
   /* Scanline Overlay Utility */
   .scanline {
-    @apply absolute inset-0 pointer-events-none overflow-hidden z-[100];
+    @apply absolute inset-0 pointer-events-none overflow-hidden z-100 animate-scanline;
     background: linear-gradient(to bottom,
-        rgba(255, 215, 0, 0) 0%,
+        rgba(255, 215, 0, 0.49) 0%,
         rgba(255, 215, 0, 0.03) 50%,
         rgba(255, 215, 0, 0) 100%);
     background-size: 100% 8px;
-    animation: scanline-move 10s linear infinite;
   }
 
   /* Matrix-like Shimmer */
   .cyber-shimmer {
-    @apply relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-white/5 before:to-transparent before:animate-[shimmer_2s_infinite];
+    @apply relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:bg-linear-to-r before:from-transparent before:via-white/5 before:to-transparent before:animate-[shimmer_2s_infinite];
   }
+
+
 }
 
 /* 
@@ -116,6 +126,7 @@
   KEYFRAMES & ANIMATIONS
   --------------------------------------------------------------------------
 */
+
 @keyframes scanline-move {
   from {
     background-position: 0 0;
@@ -176,34 +187,54 @@
   --------------------------------------------------------------------------
 */
 @supports (view-timeline-name: --layer) {
-  .scroll-layer {
+
+  /* The container that defines the scroll-space for the section */
+  .stack-layer {
     view-timeline-name: --layer;
     view-timeline-axis: block;
-    perspective: 1000px;
+    /* position: relative;
+    width: 100%;
+    perspective: 1000px; */
   }
 
-  /* CRT Reveal Animation */
-  .crt-reveal {
-    animation: crt-expand linear both;
+  /* The sticky element that performs the animation */
+  .scroll-layer {
+    animation:
+      crt-expand linear both,
+      stack-shrink linear both;
     animation-timeline: --layer;
-    animation-range: entry 0% entry 100%;
-    transform-origin: center;
+    /* Entry: Reveal the section. Exit: Shrink it as the next one comes in */
+    animation-range: entry 0% entry 100%, exit 0% exit 100%;
+    will-change: transform, opacity, filter;
   }
 
-  /* Stack Shrink Animation */
-  .layer-shrink {
-    animation: stack-shrink linear both;
-    animation-timeline: --layer;
-    animation-range: exit 0% exit 100%;
-  }
-
-  /* Revelation Content Fade */
   .revelation-content {
-    animation: fade-up linear both;
+    animation: fade-up 1s linear both;
     animation-timeline: --layer;
-    animation-range: entry 70% entry 100%;
+    animation-range: entry 80% entry 100%;
+  }
+
+  .scroll-shrink {
+    animation: shrink-text linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0px 500px;
+    will-change: transform, opacity;
+  }
+
+  /* Utility for the very first section to be visible immediately */
+  .initial-visible {
+    animation: stack-shrink 1s linear both !important;
+    opacity: 1 !important;
+  }
+
+  .initial-reveal {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
+
+
 
 @keyframes crt-expand {
   0% {
@@ -251,9 +282,23 @@
   }
 }
 
+@keyframes shrink-text {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+
+  }
+
+  100% {
+    transform: scale(0.4);
+    opacity: 0;
+
+  }
+}
+
 /* Hardware Acceleration Class */
 .accelerated {
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity;
   backface-visibility: hidden;
   transform: translateZ(0);
 }

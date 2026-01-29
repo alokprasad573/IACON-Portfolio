@@ -361,9 +361,6 @@ const App = () => {
       </footer>
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-        h1, h2, h3, h4, .font-mono { font-family: 'Orbitron', sans-serif; }
         @keyframes shimmer { 
           0% { transform: translateX(-100%); } 
           100% { transform: translateX(200%); } 

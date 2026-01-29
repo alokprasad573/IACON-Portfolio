@@ -2,19 +2,20 @@
 
 import { useState, useEffect } from 'react';
 
-export const useConnection = (autoStart = true, intervalMs = 3000) => {
+export const useConnection = (autoStart, intervalMs) => {
     const [connection, setConnection] = useState(0);
 
-    const connTexts = [
-        "Booting Protocols Running please wait...",
-        "Initializing Connection...",
-        "Connecting with MAINFRAME ....",
-        "Connection established.",
-        "You are connected with IACON MAINFRAME.",
-        "Welcome to Sector-7 [ IACON ]",
-        "Biometric frequency required for identification.",
-        "Enter your bio frequency for identification"
-    ];
+    const connTexts =[
+    "Booting Cybertronian Protocols... Stand by for activation.",
+    "Initializing uplink to Autobot Command...",
+    "Establishing secure channel with IACON MAINFRAME...",
+    "Connection stabilized. Signal locked.",
+    "You are now interfaced with the IACON Core.",
+    "Welcome, warrior, to Sector-7 [IACON].",
+    "Biometric resonance required for Autobot identification.",
+    "Transmit your bio-frequency to confirm allegiance."
+];
+
 
     useEffect(() => {
         if (!autoStart) return;

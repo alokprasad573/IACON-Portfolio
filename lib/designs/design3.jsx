@@ -182,7 +182,7 @@ const AutobotTerminal = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-100 bg-black/95 backdrop-blur-md flex items-center justify-center p-4">
-      <div className="w-full max-w-2xl border-2 border-yellow-400 bg-[#050505] flex flex-col h-[550px] shadow-[0_0_60px_rgba(250,204,21,0.25)] relative overflow-hidden">
+      <div className="w-full max-w-2xl border-2 border-yellow-400 bg-bg-deep flex flex-col h-[550px] shadow-[0_0_60px_rgba(250,204,21,0.25)] relative overflow-hidden">
         {step === 'ENCRYPTING' && (
           <div className="absolute inset-0 bg-yellow-400/10 z-50 flex flex-col items-center justify-center p-10 pointer-events-none border-4 border-yellow-400/50">
             <div className="w-full max-w-xs space-y-6 text-center">
@@ -463,10 +463,6 @@ const App = () => {
         .animate-slide-up-heading { animation: slide-up-heading 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
         .delay-100 { animation-delay: 0.1s; }
         .delay-300 { animation-delay: 0.3s; }
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: #eab308; }
-        html { scroll-behavior: smooth; }
       `}} />
     </div>
   );

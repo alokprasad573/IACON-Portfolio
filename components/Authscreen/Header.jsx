@@ -13,8 +13,8 @@ const Header = ({ statusText }) => {
                 </p>
             </div>
             <div className="text-right">
-                <div className="text-sm tracking-[0.3em] opacity-80 border border-current px-2 py-0.5 inline-flex items-center gap-2">
-                    <Network size={10} />BASE : ALPHA-7
+                <div className="text-sm text-left tracking-[0.2em] opacity-80 border border-current px-2 py-0.5 inline-flex items-center gap-2">
+                   BASE : ALPHA-7 <br />STATUS : ACTIVE
                 </div>
             </div>
         </div>

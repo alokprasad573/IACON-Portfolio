@@ -7,6 +7,7 @@ import {
   ShieldCheck,
   ExternalLink,
   Github,
+  X,
   GraduationCap,
   Activity,
   Linkedin,
@@ -28,9 +29,8 @@ const techStck = {
   languages: ["HTML5", "CSS3", "JavaScript ES6", "Python", "Java"],
   libraries: ["numpy", "pandas", "matplotlib", "seaborn", "scikit-learn", "tensorflow", "pytorch", "keras"],
   frameworks: ["Next.js", "Tailwind CSS", "Flask", "FastAPI", "Express.js", "Langchain"],
-  databases: ["MongoDB", "MySQL"],
+
   tools: ["Git", "GitHub", "Docker", "Kubernetes", "Postman"],
-  dsa: ["Java Intermediate", "Data Structure", "Algorithms"],
 };
 
 const certifications = [
@@ -61,99 +61,78 @@ const projects = [
     tags: ["React", "TypeScript", "Puter.js"]
   },
   {
-    title: "Stackscore AI",
-    description: "AI-powered resume analyzer optimizing job applications with high-precision LLM parsing.",
-    image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&q=80&w=800",
-    github: "https://github.com/alokprasad573/StackScore.git",
-    link: "https://stack-score.vercel.app/",
-    tags: ["React", "TypeScript", "Puter.js"]
+    title: "Cyber-Sentinel",
+    description: "Encrypted authentication system utilizing biometric Cybertronian logic gates.",
+    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800",
+    github: "https://github.com/alokprasad573/",
+    link: "#",
+    tags: ["Next.js", "Firebase", "WebAuthn"]
   },
   {
-    title: "Stackscore AI",
-    description: "AI-powered resume analyzer optimizing job applications with high-precision LLM parsing.",
-    image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&q=80&w=800",
-    github: "https://github.com/alokprasad573/StackScore.git",
-    link: "https://stack-score.vercel.app/",
-    tags: ["React", "TypeScript", "Puter.js"]
-  },
-  {
-    title: "Stackscore AI",
-    description: "AI-powered resume analyzer optimizing job applications with high-precision LLM parsing.",
-    image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&q=80&w=800",
-    github: "https://github.com/alokprasad573/StackScore.git",
-    link: "https://stack-score.vercel.app/",
-    tags: ["React", "TypeScript", "Puter.js"]
-  },
-  {
-    title: "Stackscore AI",
-    description: "AI-powered resume analyzer optimizing job applications with high-precision LLM parsing.",
-    image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&q=80&w=800",
-    github: "https://github.com/alokprasad573/StackScore.git",
-    link: "https://stack-score.vercel.app/",
-    tags: ["React", "TypeScript", "Puter.js"]
-  },
-  {
-    title: "Stackscore AI",
-    description: "AI-powered resume analyzer optimizing job applications with high-precision LLM parsing.",
-    image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&q=80&w=800",
-    github: "https://github.com/alokprasad573/StackScore.git",
-    link: "https://stack-score.vercel.app/",
-    tags: ["React", "TypeScript", "Puter.js"]
-  },
+    title: "Energon Grid",
+    description: "Real-time visualization of resource distribution across sector 7-B.",
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800",
+    github: "https://github.com/alokprasad573/",
+    link: "#",
+    tags: ["Three.js", "FastAPI", "WebSockets"]
+  }
 ];
 
 // --- CYBER SCREEN COMPONENT ---
 const CyberScreen = ({ children, accentColor = "#FFD700", glowLevel = 30 }) => {
   return (
-    <div
-      className="relative w-full max-w-[90%] md:max-w-[1000px] bg-[#030712]/95 border backdrop-blur-xl overflow-hidden p-8 md:p-12 transition-all duration-500 accelerated"
-      style={{
-        clipPath: 'polygon(0% 20px, 20px 0%, calc(100% - 20px) 0%, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0% calc(100% - 20px))',
-        boxShadow: `0 0 ${glowLevel}px ${accentColor}33`,
-        borderColor: accentColor,
-        color: accentColor,
-      }}
-    >
-
-      {/* Cyber-Frame Accents - Top Runner with Pips */}
+   
+     <div className="bg-black blackflex items-center justify-center">
       <div
-        className="absolute top-0 left-[10%] right-[10%] h-[2px]"
-        style={{ backgroundColor: accentColor, boxShadow: `0 0 8px ${accentColor}` }}
+        className="crt-reveal layer-shrink relative w-full max-w-[80vw]  bg-[#030712]/95 border backdrop-blur-md overflow-hidden p-8 md:12 transition-all duration-500 accelerated"
+        style={{
+          // Updated to 20px chamfered corners per CyberFrame style
+          clipPath: 'polygon(0% 20px, 20px 0%, calc(100% - 20px) 0%, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0% calc(100% - 20px))',
+          boxShadow: `0 0 ${glowLevel}px ${accentColor}33`,
+          borderColor: accentColor,
+          color: accentColor,
+        }}
       >
-        <div className="absolute left-0 top-0 h-2 w-px bg-current" />
-        <div className="absolute right-0 top-0 h-2 w-px bg-current" />
-      </div>
+        {/* Cyber-Frame Accents - Top Runner with Pips */}
+        <div 
+          className="absolute top-0 left-[10%] right-[10%] h-[2px]" 
+          style={{ backgroundColor: accentColor, boxShadow: `0 0 8px ${accentColor}` }}
+        >
+          <div className="absolute left-0 top-0 h-2 w-px bg-current" />
+          <div className="absolute right-0 top-0 h-2 w-px bg-current" />
+        </div>
 
-      {/* Cyber-Frame Accents - Bottom Runner with Pips */}
-      <div
-        className="absolute bottom-0 left-[10%] right-[10%] h-[2px]"
-        style={{ backgroundColor: accentColor, boxShadow: `0 0 8px ${accentColor}` }}
-      >
-        <div className="absolute left-0 bottom-0 h-2 w-px bg-current" />
-        <div className="absolute right-0 bottom-0 h-2 w-px bg-current" />
-      </div>
+        {/* Cyber-Frame Accents - Bottom Runner with Pips */}
+        <div 
+          className="absolute bottom-0 left-[10%] right-[10%] h-[2px]" 
+          style={{ backgroundColor: accentColor, boxShadow: `0 0 8px ${accentColor}` }}
+        >
+          <div className="absolute left-0 bottom-0 h-2 w-px bg-current" />
+          <div className="absolute right-0 bottom-0 h-2 w-px bg-current" />
+        </div>
 
-      <div className="absolute top-1/2 -translate-y-1/2 left-0 w-[2px] h-8 opacity-40 bg-current" />
-      <div className="absolute top-1/2 -translate-y-1/2 right-0 w-[2px] h-8 opacity-40 bg-current" />
+        {/* Side Notches */}
+        <div className="absolute top-1/2 -translate-y-1/2 left-0 w-[2px] h-8 opacity-40 bg-current" />
+        <div className="absolute top-1/2 -translate-y-1/2 right-0 w-[2px] h-8 opacity-40 bg-current" />
 
-      <div className="relative z-10 revelation-content">
-        {children}
+        {/* Content Container */}
+        <div className="relative z-10 w-full p-8">
+          {children}
+        </div>
       </div>
     </div>
   );
 };
 
 // --- STACK LAYER COMPONENT ---
-const StackLayer = ({ children, index, className = "" }) => {
+const StackLayer = ({ children, index }) => {
   return (
-    <div className="stack-layer relative w-screen h-screen">
-      <div
-        className={`scroll-layer sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden ${className}`}
-        style={{ zIndex: index }}
-      >
-        <div className="w-full flex justify-center accelerated">
-          {children}
-        </div>
+    <div
+      className="scroll-layer sticky bg-black top-0 h-screen w-full flex items-center justify-center overflow-hidden"
+      style={{ zIndex: index }}
+    >
+      <div className="w-full flex justify-center accelerated">
+        {children}
       </div>
     </div>
   );
@@ -166,7 +145,6 @@ const CityScanBackground = () => {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 2000);
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
     mountRef.current.appendChild(renderer.domElement);
 
@@ -190,9 +168,8 @@ const CityScanBackground = () => {
       cityGroup.add(line);
     }
 
-    let animationId;
     const animate = () => {
-      animationId = requestAnimationFrame(animate);
+      requestAnimationFrame(animate);
       cityGroup.position.z = (window.scrollY * 0.4) % 1000;
       camera.position.y = 80 + Math.sin(Date.now() * 0.001) * 10;
       camera.lookAt(0, 50, -1000);
@@ -207,10 +184,8 @@ const CityScanBackground = () => {
     };
     window.addEventListener('resize', handleResize);
     return () => {
-      cancelAnimationFrame(animationId);
       window.removeEventListener('resize', handleResize);
       mountRef.current?.removeChild(renderer.domElement);
-      renderer.dispose();
     };
   }, []);
   return <div ref={mountRef} className="fixed inset-0 z-0 pointer-events-none" />;
@@ -219,10 +194,8 @@ const CityScanBackground = () => {
 // --- MAIN APP ---
 const App = () => {
   return (
-    <div className=" text-gray-300 selection:bg-yellow-500 selection:text-black">
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <CityScanBackground />
-      </div>
+    <div className="bg-bg-deep text-gray-300 selection:bg-yellow-500 selection:text-black">
+
       {/* FIXED HUD */}
       <div className="fixed inset-0 pointer-events-none z-60">
         <div className="absolute top-0 w-full h-px bg-yellow-500/20"></div>
@@ -246,42 +219,49 @@ const App = () => {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="hero-contents relative h-screen flex flex-col items-center justify-center text-center px-6 overflow-hidden">
-        <div className="mb-6 inline-flex items-center gap-2 border border-yellow-500/20 px-4 py-1 rounded-full bg-yellow-500/5 backdrop-blur-md">
-          <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-ping"></div>
-          <span className="text-[9px] font-mono tracking-widest uppercase text-yellow-500 font-bold">Bio-Link Established</span>
-        </div>
-        <div className="scroll-shrink">
-          <h1 className="text-6xl md:text-8xl lg:text-[10rem] text-white leading-[0.9] tracking-tighter">
-            ALOK <br /> <span className="text-transparent" style={{ WebkitTextStroke: '2px #FFD700' }}>PRASAD</span>
-          </h1>
-
-          <p className="mt-8 text-lg md:text-xl text-yellow-500/60 tracking-[0.3em]">
-            Intelligence // Architecture // Transformation
-          </p>
-
-          <div className="mt-5 flex flex-wrap justify-center gap-8 md:gap-12">
-            {/* GitHub Link */}
-            <a href="https://github.com/alokprasad573" className="group flex items-center gap-3 text-gray-500 hover:text-yellow-500 transition-all">
-              <Github size={24} className="group-hover:scale-110 transition-transform" />
-              <span className="text-[10px] font-mono uppercase tracking-widest hidden md:block">Source_Code</span>
-            </a>
-
-            {/* LinkedIn Link */}
-            <a href="#" className="group flex items-center gap-3 text-gray-500 hover:text-yellow-500 transition-all">
-              <Linkedin size={24} className="group-hover:scale-110 transition-transform" />
-              <span className="text-[10px] font-mono uppercase tracking-widest hidden md:block">Neural_Network</span>
-            </a>
-
-            {/* Email Link */}
-            <a href="mailto:contact@alok.prime" className="group flex items-center gap-3 text-gray-500 hover:text-yellow-500 transition-all">
-              <Mail size={24} className="group-hover:scale-110 transition-transform" />
-              <span className="text-[10px] font-mono uppercase tracking-widest hidden md:block">Direct_Link</span>
-            </a>
+      <StackLayer index={1}>
+        <CityScanBackground />
+        <section className="layer-shrink hero-contents relative h-screen flex flex-col items-center justify-center text-center px-6 z-10 overflow-hidden">
+          <div className="mb-6 inline-flex items-center gap-2 border border-yellow-500/20 px-4 py-1 rounded-full bg-yellow-500/5 backdrop-blur-md">
+            <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-ping"></div>
+            <span className="text-[9px] font-mono tracking-widest uppercase text-yellow-500 font-bold">Bio-Link Established</span>
           </div>
-        </div>
-      </section>
+          <div className="scroll-shrink">
+            <h1 className="text-7xl md:text-[10rem] text-white leading-none">
+              ALOK <br /> <span className="text-transparent" style={{ WebkitTextStroke: '2px #FFD700' }}>PRASAD</span>
+            </h1>
+
+            <p className="mt-8 text-lg md:text-xl text-yellow-500/60 tracking-[0.3em]">
+              Intelligence // Architecture // Transformation
+            </p>
+
+            <div className="mt-5 flex flex-wrap justify-center gap-8 md:gap-12">
+              {/* GitHub Link */}
+              <a href="https://github.com/alokprasad573" className="group flex items-center gap-3 text-gray-500 hover:text-yellow-500 transition-all">
+                <Github size={24} className="group-hover:scale-110 transition-transform" />
+                <span className="text-[10px] font-mono uppercase tracking-widest hidden md:block">Source_Code</span>
+              </a>
+
+              {/* LinkedIn Link */}
+              <a href="#" className="group flex items-center gap-3 text-gray-500 hover:text-yellow-500 transition-all">
+                <Linkedin size={24} className="group-hover:scale-110 transition-transform" />
+                <span className="text-[10px] font-mono uppercase tracking-widest hidden md:block">Neural_Network</span>
+              </a>
+
+              {/* Email Link */}
+              <a href="mailto:contact@alok.prime" className="group flex items-center gap-3 text-gray-500 hover:text-yellow-500 transition-all">
+                <Mail size={24} className="group-hover:scale-110 transition-transform" />
+                <span className="text-[10px] font-mono uppercase tracking-widest hidden md:block">Direct_Link</span>
+              </a>
+            </div>
+          </div>
+        </section>
+      </StackLayer>
+
+
+
+
+
 
       {/* THE STACK CONTAINER */}
       <div className="relative z-20 stack-container">
@@ -387,7 +367,9 @@ const App = () => {
         </StackLayer>
       </div>
     </div>
+    
   );
 };
+
 
 export default App;

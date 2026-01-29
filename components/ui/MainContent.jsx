@@ -1,3 +1,5 @@
+import { memo} from 'react';
+
 import Header from '@/components/Authscreen/Header';
 import Scanner from '@/components/Authscreen/Scanner';
 import ActionStatus from '@/components/Authscreen/ActionStatus';
@@ -6,9 +8,7 @@ import Logs from '@/components/Authscreen/Logs';
 import Button from '@/components/Authscreen/Button';
 
 
-const MainContent = ({ props }) => {
-
-    const { statusText, isVerified, glyphText, actionLabel, logs, authState, setAuthState, setStatusText, setActionLabel, setGlyphText, addLog, wait, contentRef, handleClose } = props;
+const MainContent = ({ statusText, isVerified, glyphText, actionLabel, logs, authState, setAuthState, setStatusText, setActionLabel, setGlyphText, addLog, wait, contentRef, handleClose } ) => {
 
     return (
         <>
@@ -44,4 +44,4 @@ const MainContent = ({ props }) => {
     )
 }
 
-export default MainContent;
+export default memo(MainContent);

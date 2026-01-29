@@ -15,12 +15,12 @@ const CyberFrame = ({ children, screenRef, accentColor, glowLevel = '30' }) => {
             }}
         >
             {/* Cyber-Frame Accents */}
-            <div className="absolute top-0 left-[15%] right-[15%] h-[2px] opacity-100" style={{ backgroundColor: accentColor, boxShadow: `0 0 8px ${accentColor}` }}>
+            <div className="absolute top-0 left-[10%] right-[10%] h-[2px] opacity-100" style={{ backgroundColor: accentColor, boxShadow: `0 0 8px ${accentColor}` }}>
                 <div className="absolute left-0 top-0 h-2 w-px bg-current" />
                 <div className="absolute right-0 top-0 h-2 w-px bg-current" />
             </div>
 
-            <div className="absolute bottom-0 left-[20%] right-[20%] h-[2px] opacity-100" style={{ backgroundColor: accentColor, boxShadow: `0 0 8px ${accentColor}` }}>
+            <div className="absolute bottom-0 left-[10%] right-[10%] h-[2px] opacity-100" style={{ backgroundColor: accentColor, boxShadow: `0 0 8px ${accentColor}` }}>
                 <div className="absolute left-0 bottom-0 h-2 w-px bg-current" />
                 <div className="absolute right-0 bottom-0 h-2 w-px bg-current" />
             </div>
@@ -28,7 +28,9 @@ const CyberFrame = ({ children, screenRef, accentColor, glowLevel = '30' }) => {
             <div className="absolute top-1/2 -translate-y-1/2 left-0 w-[2px] h-8 opacity-40 bg-current" />
             <div className="absolute top-1/2 -translate-y-1/2 right-0 w-[2px] h-8 opacity-40 bg-current" />
 
-            {children}
+           <div className="relative z-10 w-full">
+                {children}
+           </div>
         </section>
     );
 };

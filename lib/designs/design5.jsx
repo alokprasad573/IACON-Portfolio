@@ -175,7 +175,7 @@ const App = () => {
     const [isCommOpen, setIsCommOpen] = useState(false);
 
     return (
-        <div className="min-h-screen bg-[#050505] text-gray-300 font-sans selection:bg-yellow-500 selection:text-black">
+        <div className="min-h-screen bg-bg-deep text-gray-300 font-sans selection:bg-yellow-500 selection:text-black">
             <CityScanBackground />
             <CommTerminal isOpen={isCommOpen} onClose={() => setIsCommOpen(false)} />
 
@@ -224,7 +224,7 @@ const App = () => {
             <div className="relative z-20">
 
                 {/* ARSENAL SECTION */}
-                <section id="arsenal" className="sticky top-0 w-[80] h-screen bg-[#050505] flex items-center justify-center border-t border-yellow-500/20 px-6 py-3 md:p-10 overflow-hidden">
+                <section id="arsenal" className="sticky top-0 w-[80] h-screen bg-bg-deep flex items-center justify-center border-t border-yellow-500/20 px-6 py-3 md:p-10 overflow-hidden">
                     <div className="max-w-4xl w-full">
                         <div className="mb-12">
                             <h2 className="text-4xl md:text-6xl font-black text-white italic uppercase mb-2">Arsenal</h2>
@@ -329,15 +329,6 @@ const App = () => {
                 </section>
             </div>
 
-            <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #050505; }
-        h1, h2, h3, h4, .font-mono { font-family: 'Orbitron', sans-serif; }
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #FFD700; }
-        html { scroll-behavior: smooth; }
-      `}</style>
         </div>
     );
 };

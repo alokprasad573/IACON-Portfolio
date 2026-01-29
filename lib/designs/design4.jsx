@@ -270,8 +270,8 @@ const MainDashboard = () => {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`w-full flex items-center gap-3 px-4 py-3 border transition-all ${activeTab === tab.id
-                    ? 'bg-cyan-500 text-black border-cyan-500'
-                    : 'border-cyan-500/20 hover:border-cyan-500/50 hover:bg-cyan-500/5'
+                  ? 'bg-cyan-500 text-black border-cyan-500'
+                  : 'border-cyan-500/20 hover:border-cyan-500/50 hover:bg-cyan-500/5'
                   }`}
               >
                 {tab.icon}
@@ -360,10 +360,6 @@ const MainDashboard = () => {
       </div>
 
       <style>{`
-        @keyframes scanline {
-          0% { transform: translateY(-100%); }
-          100% { transform: translateY(200%); }
-        }
         .animate-scanline {
           animation: scanline 8s linear infinite;
         }

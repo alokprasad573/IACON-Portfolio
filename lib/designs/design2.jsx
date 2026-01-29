@@ -360,7 +360,7 @@ const App = () => {
 
           <div className="grid lg:grid-cols-2 gap-px bg-yellow-500/10">
             {certifications.map((cert, idx) => (
-              <div key={idx} className="bg-[#050505] p-12 hover:bg-black transition-all group flex flex-col md:flex-row gap-12 items-start md:items-center relative">
+              <div key={idx} className="bg-bg-deep p-12 hover:bg-black transition-all group flex flex-col md:flex-row gap-12 items-start md:items-center relative">
                 <div className="absolute top-0 left-0 w-1 h-0 bg-yellow-500 group-hover:h-full transition-all"></div>
                 <div className="w-24 h-24 bg-zinc-900 p-4 border border-zinc-800 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all relative shadow-2xl overflow-hidden">
                   <img src={cert.logo} alt={cert.organization} className="max-w-full max-h-full object-contain relative z-10" />
@@ -410,59 +410,15 @@ const App = () => {
           </div>
         </div>
       </footer>
-
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
-        
-        body { 
-          font-family: 'Space Grotesk', sans-serif; 
-          background-color: #020202;
-          scroll-behavior: smooth;
-        }
-        .font-mono { font-family: 'JetBrains Mono', monospace; }
-
-        @keyframes loading {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
-
-        .animate-spin-slow {
-          animation: spin 12s linear infinite;
-        }
-
         @keyframes spin {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
 
-        /* Scanline Overlay */
-        main::before {
-          content: "";
-          position: fixed;
-          top: 0; left: 0; width: 100%; height: 100%;
-          background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.05) 50%);
-          z-index: 100;
-          background-size: 100% 4px;
-          pointer-events: none;
-        }
-
         .text-outline-yellow {
           -webkit-text-stroke: 1px #eab308;
           color: transparent;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-          width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-          background: #000;
-        }
-        ::-webkit-scrollbar-thumb {
-          background: #eab308;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-          background: #fff;
         }
       `}</style>
     </div>
