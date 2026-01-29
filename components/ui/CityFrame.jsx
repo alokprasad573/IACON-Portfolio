@@ -1,3 +1,8 @@
+'use client';
+
+import React, { useRef, useEffect } from 'react';
+import * as THREE from 'three';
+
 const CityFrame = () => {
   const mountRef = useRef(null);
   useEffect(() => {

@@ -2,14 +2,11 @@
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 
-import CyberBackground from '@/components/ui/CyberBackground';
-import MainContent from '@/components/ui/MainContent';
+import MainContent from '@/components/Authscreen/MainContent';
 import ConnectionStatus from '@/components/Authscreen/ConnectionStatus';
 import CyberFrame from '@/components/Authscreen/CyberFrame';
-
 import { useGsap } from '@/hooks/useGsap';
 import { useConnection } from '@/hooks/useConnection';
-
 
 const Main = () => {
     // 1. Hooks & State
@@ -114,8 +111,6 @@ const Main = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-black">
-            <CyberBackground isVerified={isVerified} />
-
             <div className="z-10 w-full max-w-4xl p-4">
                 <CyberFrame
                     screenRef={screenRef}

@@ -1,5 +1,5 @@
 import "./globals.css";
-import CityScanBackground from "@/components/ui/CityScanBackGround";
+import CityFrame from "@/components/ui/CityFrame";
 
 export const metadata = {
   title: "My Portfolio",
@@ -11,7 +11,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className="scroll-smooth">
       <body>
           <div className="fixed inset-0 top-0 z-0 min-h-screen w-full pointer-events-none overflow-hidden">
-            <CityScanBackground />
+            <CityFrame />
           </div>
           <main className="relative z-10 min-h-screen w-full">
             {children}
