@@ -1,10 +1,36 @@
 
 
+import { useRef } from 'react';
 import Image from 'next/image';
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Navbar = () => {
+    const navRef = useRef(null);
+
+    useGSAP(() => {
+        gsap.set(navRef.current, { yPercent: -100 });
+
+        ScrollTrigger.create({
+            start: "top top",
+            end: 99999,
+            onUpdate: (self) => {
+                // Show navbar when scrolled down > 100px
+                const shouldShow = self.scroll() > 100;
+                gsap.to(navRef.current, {
+                    yPercent: shouldShow ? 0 : -100,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            }
+        });
+    }, { scope: navRef });
+
     return (
-        <nav className="fixed top-0 left-0 w-full z-100 border-b border-yellow-500/10 bg-black/40 backdrop-blur-xl">
+        <nav ref={navRef} className="fixed top-0 left-0 w-full bg-black border-b border-yellow-500/10 backdrop-blur-xl z-10">
             <div className="max-w-7xl mx-auto px-8 h-20 flex items-center justify-between">
                 {/* Left side Logo */}
                 <div className="flex items-center gap-2">
@@ -22,8 +48,8 @@ const Navbar = () => {
                         { name: 'Inbound', href: '#hero' },
                         { name: 'Arsenals', href: '#arsenals' },
                         { name: 'Modules', href: '#modules' },
-                        { name: 'Clearences', href: '#clearences' },
                         { name: 'Operation', href: '#operation' },
+                        { name: 'Clearences', href: '#clearences' },
                     ].map((link) => (
                         <a
                             key={link.name}

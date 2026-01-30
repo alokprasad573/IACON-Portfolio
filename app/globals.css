@@ -51,7 +51,7 @@
   h4,
   h5,
   h6 {
-    @apply italic font-black tracking-tighter text-brand-yellow;
+    @apply font-black tracking-tighter text-brand-yellow;
     text-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
   }
 

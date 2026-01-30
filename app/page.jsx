@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useMemo } from 'react';
-
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import IaconCmdCtr from '@/components/ui/IaconCmdCtr';
 import MainContent from '@/components/Authscreen/MainContent';
 import ConnectionStatus from '@/components/Authscreen/ConnectionStatus';
 import CyberFrame from '@/components/Authscreen/CyberFrame';
@@ -28,25 +28,25 @@ const Main = () => {
     const hasTransitioned = useRef(false);
 
 
-    const addLog = (msg) => setLogs(prev => [...prev, msg]);
-    const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    const addLog = useCallback((msg) => setLogs(prev => [...prev, msg]), []);
+    const wait = useCallback((ms) => new Promise(resolve => setTimeout(resolve, ms)), []);
 
     const isVerified = authState === 'VERIFIED';
     const accentColor = isVerified ? '#FFD700' : '#80DEEA';
 
-    const handleClose = () => {
+    const handleClose = useCallback(() => {
         if (!gsap || !screenRef.current) return;
         const tl = gsap.timeline();
         tl.to(contentRef.current, { opacity: 0, duration: 0.3 })
             .to(screenRef.current, { scaleY: 0.002, duration: 0.5, ease: "expo.inOut" })
             .to(screenRef.current, { scaleX: 0, opacity: 0, duration: 0.4, ease: "expo.in" });
-    };
+    }, [gsap]);
 
     const props = useMemo(() => ({
         statusText, isVerified, glyphText, actionLabel, logs,
         authState, setAuthState, setStatusText, setActionLabel, setGlyphText,
-        addLog, wait, contentRef, handleClose
-    }), [statusText, isVerified, glyphText, actionLabel, logs, authState, setAuthState, setStatusText, setActionLabel, setGlyphText, addLog, wait, contentRef, handleClose])
+        addLog, wait, handleClose
+    }), [statusText, isVerified, glyphText, actionLabel, logs, authState, addLog, wait, handleClose])
 
     // 2. Animations
     // Opening Animation
@@ -111,7 +111,13 @@ const Main = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-black">
-            <div className="z-10 w-full max-w-4xl p-4">
+            {/* Background Layer - IaconCmdCtr */}
+            <div className="absolute inset-0 z-0">
+                <IaconCmdCtr />
+            </div>
+
+            {/* Foreground Layer - CyberFrame */}
+            <div className="relative z-10 w-full max-w-4xl p-4">
                 <CyberFrame
                     screenRef={screenRef}
                     accentColor={accentColor}

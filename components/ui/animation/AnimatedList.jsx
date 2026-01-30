@@ -1,166 +1,212 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { motion, useInView } from 'motion/react';
+import { useCallback, useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const AnimatedItem = ({ children, delay = 0, index, onMouseEnter, onClick }) => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { amount: 0.5, triggerOnce: false });
-  return (
-    <motion.div
-      ref={ref}
-      data-index={index}
-      onMouseEnter={onMouseEnter}
-      onClick={onClick}
-      initial={{ scale: 0.7, opacity: 0 }}
-      animate={inView ? { scale: 1, opacity: 1 } : { scale: 0.7, opacity: 0 }}
-      transition={{ duration: 0.2, delay }}
-      className="cursor-pointer"
-    >
-      {children}
-    </motion.div>
-  );
-};
-
-const AnimatedList = ({
+const AnimatedList = forwardRef(({
   items = [],
   onItemSelect,
+  onIndexChange,
   renderItem,
   showGradients = true,
   gradientColor = 'black',
   enableArrowNavigation = true,
   className = '',
-  itemClassName = '',
-  displayScrollbar = false,
-  initialSelectedIndex = -1,
-  maxHeight = '450px'
-}) => {
-  const listRef = useRef(null);
-  const [selectedIndex, setSelectedIndex] = useState(initialSelectedIndex);
-  const [keyboardNav, setKeyboardNav] = useState(false);
-  const [topGradientOpacity, setTopGradientOpacity] = useState(0);
-  const [bottomGradientOpacity, setBottomGradientOpacity] = useState(1);
+  initialSelectedIndex = 0,
+  selectedIndex: controlledIndex,
+}, ref) => {
+  const containerRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(initialSelectedIndex);
+  const [direction, setDirection] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
 
-  const handleItemMouseEnter = useCallback(index => {
-    setSelectedIndex(index);
-  }, []);
+  // Swipe threshold
+  const swipeThreshold = 50;
 
-  const handleItemClick = useCallback(
-    (item, index) => {
-      setSelectedIndex(index);
-      if (onItemSelect) {
-        onItemSelect(item, index);
-      }
-    },
-    [onItemSelect]
-  );
+  // Sync with controlled index from parent
+  useEffect(() => {
+    if (controlledIndex !== undefined && controlledIndex !== currentIndex) {
+      const dir = controlledIndex > currentIndex ? 1 : -1;
+      setDirection(dir);
+      setCurrentIndex(controlledIndex);
+    }
+  }, [controlledIndex]);
 
-  const handleScroll = useCallback(e => {
-    const { scrollTop, scrollHeight, clientHeight } = e.target;
-    setTopGradientOpacity(Math.min(scrollTop / 50, 1));
-    const bottomDistance = scrollHeight - (scrollTop + clientHeight);
-    setBottomGradientOpacity(scrollHeight <= clientHeight ? 0 : Math.min(bottomDistance / 50, 1));
-  }, []);
+  const goToIndex = useCallback((newIndex, dir = 0) => {
+    if (newIndex < 0 || newIndex >= items.length) return;
 
+    // Auto-determine direction if not specified
+    if (dir === 0) {
+      dir = newIndex > currentIndex ? 1 : -1;
+    }
+
+    setDirection(dir);
+    setCurrentIndex(newIndex);
+
+    if (onIndexChange) {
+      onIndexChange(newIndex);
+    }
+  }, [currentIndex, items.length, onIndexChange]);
+
+  const goNext = useCallback(() => {
+    if (currentIndex < items.length - 1) {
+      goToIndex(currentIndex + 1, 1);
+    }
+  }, [currentIndex, items.length, goToIndex]);
+
+  const goPrev = useCallback(() => {
+    if (currentIndex > 0) {
+      goToIndex(currentIndex - 1, -1);
+    }
+  }, [currentIndex, goToIndex]);
+
+  const handleItemClick = useCallback(() => {
+    if (onItemSelect && items[currentIndex]) {
+      onItemSelect(items[currentIndex], currentIndex);
+    }
+  }, [items, currentIndex, onItemSelect]);
+
+  // Keyboard navigation (left/right arrows)
   useEffect(() => {
     if (!enableArrowNavigation) return;
-    const handleKeyDown = e => {
-      if (e.key === 'ArrowDown' || (e.key === 'Tab' && !e.shiftKey)) {
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowRight' || (e.key === 'Tab' && !e.shiftKey)) {
         e.preventDefault();
-        setKeyboardNav(true);
-        setSelectedIndex(prev => Math.min(prev + 1, items.length - 1));
-      } else if (e.key === 'ArrowUp' || (e.key === 'Tab' && e.shiftKey)) {
+        goNext();
+      } else if (e.key === 'ArrowLeft' || (e.key === 'Tab' && e.shiftKey)) {
         e.preventDefault();
-        setKeyboardNav(true);
-        setSelectedIndex(prev => Math.max(prev - 1, 0));
+        goPrev();
       } else if (e.key === 'Enter') {
-        if (selectedIndex >= 0 && selectedIndex < items.length) {
-          e.preventDefault();
-          if (onItemSelect) {
-            onItemSelect(items[selectedIndex], selectedIndex);
-          }
-        }
+        e.preventDefault();
+        handleItemClick();
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [items, selectedIndex, onItemSelect, enableArrowNavigation]);
+  }, [enableArrowNavigation, goNext, goPrev, handleItemClick]);
 
-  useEffect(() => {
-    if (!keyboardNav || selectedIndex < 0 || !listRef.current) return;
-    const container = listRef.current;
-    const selectedItem = container.querySelector(`[data-index="${selectedIndex}"]`);
-    if (selectedItem) {
-      const extraMargin = 0;
-      const containerScrollTop = container.scrollTop;
-      const containerHeight = container.clientHeight;
-      const itemTop = selectedItem.offsetTop;
-      const itemBottom = itemTop + selectedItem.offsetHeight;
-      if (itemTop < containerScrollTop + extraMargin) {
-        container.scrollTo({ top: itemTop - extraMargin, behavior: 'smooth' });
-      } else if (itemBottom > containerScrollTop + containerHeight - extraMargin) {
-        container.scrollTo({
-          top: itemBottom - containerHeight + extraMargin,
-          behavior: 'smooth'
-        });
-      }
+  // Drag/Swipe handlers
+  const handleDragEnd = useCallback((event, info) => {
+    setIsDragging(false);
+    const { offset, velocity } = info;
+
+    // Determine swipe direction based on offset and velocity
+    if (offset.x < -swipeThreshold || velocity.x < -500) {
+      goNext();
+    } else if (offset.x > swipeThreshold || velocity.x > 500) {
+      goPrev();
     }
-    setKeyboardNav(false);
-  }, [selectedIndex, keyboardNav]);
+  }, [goNext, goPrev]);
+
+  // Animation variants for slide transitions
+  const slideVariants = {
+    enter: (direction) => ({
+      x: direction > 0 ? '100%' : '-100%',
+      opacity: 0,
+      scale: 0.9,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+      zIndex: 1,
+    },
+    exit: (direction) => ({
+      x: direction < 0 ? '50%' : '-50%',
+      opacity: 0,
+      scale: 0.85,
+      zIndex: 0,
+    }),
+  };
 
   return (
-    <div className={`relative w-[90vw] px-12 py-2 mx-atuo top-2 left-1/2 -translate-x-1/2 overflow-hidden ${className}`}>
+    <div className={`relative w-full overflow-hidden ${className}`}>
+      {/* Main Carousel Container */}
       <div
-        ref={listRef}
-        className={`overflow-y-auto ${displayScrollbar
-          ? '[&::-webkit-scrollbar]:w-[8px] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-yellow-500/20 [&::-webkit-scrollbar-thumb]:rounded-[4px]'
-          : '[&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none]'
-          }`}
-        onScroll={handleScroll}
-        style={{
-          maxHeight,
-          scrollbarWidth: displayScrollbar ? 'thin' : 'none',
-          scrollbarColor: displayScrollbar ? 'rgba(255, 215, 0, 0.2) transparent' : 'none'
-        }}
+        ref={containerRef}
+        className="relative w-full flex items-center justify-center"
+        style={{ minHeight: '450px' }}
       >
-        {items.map((item, index) => (
-          <div key={index}>
-            <AnimatedItem
-              delay={0.1}
-              index={index}
-              onMouseEnter={() => handleItemMouseEnter(index)}
-              onClick={() => handleItemClick(item, index)}
-            >
-              {renderItem ? (
-                renderItem(item, index, selectedIndex === index)
-              ) : (
-                <div className={`bg-[#111] rounded-lg ${selectedIndex === index ? 'bg-[#222]' : ''} ${itemClassName}`}>
-                  <p className="text-white m-0">{item}</p>
-                </div>
-              )}
-            </AnimatedItem>
-          </div>
-        ))}
+        <AnimatePresence initial={false} custom={direction} mode="popLayout">
+          <motion.div
+            key={currentIndex}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{
+              x: { type: 'spring', stiffness: 300, damping: 30 },
+              opacity: { duration: 0.3 },
+              scale: { duration: 0.3 },
+            }}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.2}
+            onDragStart={() => setIsDragging(true)}
+            onDragEnd={handleDragEnd}
+            onClick={() => !isDragging && handleItemClick()}
+            className="cursor-grab active:cursor-grabbing w-full flex justify-center"
+          >
+            {renderItem ? (
+              renderItem(items[currentIndex], currentIndex, true)
+            ) : (
+              <div className="bg-[#111] rounded-lg p-4">
+                <p className="text-white m-0">{items[currentIndex]}</p>
+              </div>
+            )}
+          </motion.div>
+        </AnimatePresence>
       </div>
+
+      {/* Navigation Arrows */}
+      <button
+        onClick={goPrev}
+        disabled={currentIndex === 0}
+        className={`absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full border-2 border-yellow-500/50 bg-black/50 backdrop-blur-sm flex items-center justify-center transition-all duration-300 ${currentIndex === 0
+          ? 'opacity-30 cursor-not-allowed'
+          : 'opacity-100 hover:bg-yellow-500/20 hover:border-yellow-500 hover:shadow-[0_0_20px_rgba(255,215,0,0.3)]'
+          }`}
+        aria-label="Previous"
+      >
+        <svg className="w-6 h-6 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+
+      <button
+        onClick={goNext}
+        disabled={currentIndex === items.length - 1}
+        className={`absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full border-2 border-yellow-500/50 bg-black/50 backdrop-blur-sm flex items-center justify-center transition-all duration-300 ${currentIndex === items.length - 1
+          ? 'opacity-30 cursor-not-allowed'
+          : 'opacity-100 hover:bg-yellow-500/20 hover:border-yellow-500 hover:shadow-[0_0_20px_rgba(255,215,0,0.3)]'
+          }`}
+        aria-label="Next"
+      >
+        <svg className="w-6 h-6 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+
+      {/* Side Gradients */}
       {showGradients && (
         <>
           <div
-            className="absolute top-0 left-0 right-0 h-[100px] pointer-events-none transition-opacity duration-300 ease"
+            className="absolute top-0 left-0 bottom-0 w-[100px] pointer-events-none"
             style={{
-              opacity: topGradientOpacity,
-              background: `linear-gradient(to bottom, ${gradientColor} 0%, transparent 100%)`
+              background: `linear-gradient(to right, ${gradientColor} 0%, transparent 100%)`
             }}
-          ></div>
+          />
           <div
-            className="absolute bottom-0 left-0 right-0 h-[100px] pointer-events-none transition-opacity duration-300 ease"
+            className="absolute top-0 right-0 bottom-0 w-[100px] pointer-events-none"
             style={{
-              opacity: bottomGradientOpacity,
-              background: `linear-gradient(to top, ${gradientColor} 0%, transparent 100%)`
+              background: `linear-gradient(to left, ${gradientColor} 0%, transparent 100%)`
             }}
-          ></div>
+          />
         </>
       )}
     </div>
   );
-};
+});
 
 export default AnimatedList;

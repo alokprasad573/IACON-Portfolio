@@ -2,84 +2,100 @@ import Screen from "../ui/Screen";
 import Image from "next/image";
 import { Github, ExternalLink } from "lucide-react";
 import AnimatedList from "../ui/animation/AnimatedList";
-
-
+import { useState, useCallback } from "react";
 
 
 const OperationLogs = ({ projects, index }) => {
+    const [activeIndex, setActiveIndex] = useState(0);
+
+    const handleItemSelect = useCallback((item, index) => {
+        console.log('Selected:', item, index);
+    }, []);
+
     return (
         <section
             id="operation"
-            className="w-full min-h-screen bg-black  pointer-events-none"
+            className="w-full min-h-screen bg-black pointer-events-none px-16 py-20"
         >
-            <div className="relative  w-full h-fit min-h-screen flex flex-col items-center justify-center px-4 md:px-12 pointer-events-auto">
-                <div className="w-full h-screen max-w-[1600px] flex justify-around">
-                    <div className="w-fit flex flex-col">
-                        <div className="mb-8 shrink-0">
-                            <h2 className="text-4xl md:text-6xl text-zinc-300 mb-2">Operation Logs</h2>
-                            <p className="text-yellow-500  text-xs my-2 tracking-[0.2em] ">Operational History</p>
-                            <div className="h-1 w-24 bg-yellow-500 shadow-[0_0_15px_#FFD700]"></div>
-                        </div>
-                        <div className="w-full flex flex-col">
-                            <AnimatedList
-                                items={projects}
-                                onItemSelect={(item, index) => console.log(item, index)}
-                                showGradients
-                                gradientColor="black"
-                                enableArrowNavigation
-                                renderItem={(proj, i, isSelected) => (
-                                    <Screen
-                                        key={i}
-                                        className={`h-[400px] w-[60vw] transition-all duration-300 ${isSelected ? 'ring-2 ring-yellow-500 shadow-[0_0_20px_rgba(255,215,0,0.3)]' : ''}`}
-                                        glowLevel={isSelected ? 50 : 30}
-                                    >
-                                        <div className="text-yellow-500/60 text-[12px] mb-2">Operation_0{i + 1}</div>
-                                        <div className="flex flex-row h-full gap-6">
-                                            <div className="relative w-fit aspect-video border-2 border-yellow-500 overflow-hidden group">
-                                                <Image
-                                                    src={proj.image}
-                                                    alt={proj.title}
-                                                    fill
-                                                    className="object-cover"
-                                                    sizes="50vw"
-                                                />
-                                                <div className="absolute bottom-0 left-0 p-2 bg-yellow-500 text-black text-[12px] font-black">
-                                                    Operational_Status : {proj.deployStatus}
-                                                </div>
-                                            </div>
-                                            <div className="flex-1">
-                                                <h3 className="text-2xl text-zinc-100 leading-none tracking-widest mb-3">{proj.title}</h3>
-                                                <p className="text-zinc-300 text-[14px] leading-relaxed mb-4 min-h-[40px]">{proj.description}</p>
-                                                <div className="flex gap-4">
-                                                    <a href={proj.github} target="_blank" rel="noopener noreferrer" className="text-zinc-300 flex items-center gap-2 font-bold uppercase text-[12px] tracking-widest hover:text-brand-yellow transition-colors">
-                                                        <Github size={14} /> Source
-                                                    </a>
-                                                    <a href={proj.link} target="_blank" rel="noopener noreferrer" className="text-zinc-300 flex items-center gap-2 font-bold uppercase text-[12px] tracking-widest hover:text-brand-yellow transition-colors">
-                                                        <ExternalLink size={14} /> Uplink
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Screen>
-                                )}
-                            />
-                        </div>
-                        <div className="relative left-1/2 -translate-x-1/2 mt-20">
-                            <div className="flex flex-col gap-3 items-center justify-center font-black uppercase text-[10px] tracking-[0.3em] text-gray-500">
-                                <div className="flex gap-3">
-                                    <a href="https://github.com/alokprasad573" className="hover:text-yellow-500">Archive</a>
-                                    <a href="https://www.linkedin.com/in/alok-prasad-474962289/" className="hover:text-yellow-500">SparkConnect</a>
-                                    <a href="#" className="hover:text-yellow-500">Email</a>
-                                </div>
-                                <p className="text-yellow-500/20 text-[12px] tracking-[0.4em] uppercase">End Of Transmission // ©2027</p>
-                            </div>
-                        </div>
-                    </div>
+            <div className="w-full flex flex-col">
+                {/* Header */}
+                <div className="mb-15 shrink-0">
+                    <h2 className="text-4xl md:text-6xl text-zinc-300 mb-2">Operation Logs</h2>
+                    <p className="text-yellow-500 text-xs my-2 tracking-[0.2em]">Operational History</p>
+                    <div className="h-1 w-24 bg-yellow-500 shadow-[0_0_15px_#FFD700]"></div>
                 </div>
 
+                {/* Carousel */}
+                <div className="w-full pointer-events-auto">
+                    <AnimatedList
+                        items={projects}
+                        onItemSelect={handleItemSelect}
+                        onIndexChange={setActiveIndex}
+                        selectedIndex={activeIndex}
+                        showGradients
+                        gradientColor="black"
+                        enableArrowNavigation
+                        initialSelectedIndex={0}
+                        renderItem={(proj, i, isSelected) => (
+                            <Screen
+                                key={i}
+                                className="h-[420px] w-[85vw] max-w-[900px] transition-all duration-300 ring-2 ring-yellow-500 shadow-[0_0_20px_rgba(255,215,0,0.3)]"
+                                glowLevel={50}
+                            >
+                                <div className="text-yellow-500/60 tracking-[0.2em] text-[12px] mb-3">Operation_0{i + 1} : {proj.deployStatus}</div>
+                                <div className="flex flex-col md:flex-row h-full gap-6">
+                                    {/* Image */}
+                                    <div className="relative w-full md:w-[55%] h-[200px] md:h-full border-2 border-yellow-500 overflow-hidden group shrink-0 bg-black/50">
+                                        <Image
+                                            src={proj.image}
+                                            alt={proj.title}
+                                            fill
+                                            className="object-contain"
+                                            sizes="(max-width: 768px) 100vw, 55vw"
+                                        />
+                                    </div>
+
+                                    {/* Content */}
+                                    <div className="flex-1 flex flex-col justify-between">
+                                        <div>
+                                            <h3 className="text-2xl md:text-3xl text-zinc-100 leading-none tracking-widest mb-4">{proj.title}</h3>
+                                            <p className="text-zinc-300 text-[14px] leading-relaxed mb-6">{proj.description}</p>
+                                        </div>
+
+                                        <div className="flex gap-6">
+                                            <a
+                                                href={proj.github}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-zinc-300 flex items-center gap-2 font-bold uppercase text-[12px] tracking-widest hover:text-yellow-500 transition-colors"
+                                            >
+                                                <Github size={18} /> Source_Code
+                                            </a>
+                                            <a
+                                                href={proj.link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-zinc-300 flex items-center gap-2 font-bold uppercase text-[12px] tracking-widest hover:text-yellow-500 transition-colors"
+                                            >
+                                                <ExternalLink size={18} /> Live_Uplink
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Screen>
+                        )}
+                    />
+                </div>
+
+                {/* Counter */}
+                <div className="w-full flex justify-center mt-8 pointer-events-auto">
+                    <div className="text-zinc-500 text-sm tracking-widest">
+                        <span className="text-yellow-500 font-bold">{String(activeIndex + 1).padStart(2, '0')}</span>
+                        <span className="mx-2">/</span>
+                        <span>{String(projects.length).padStart(2, '0')}</span>
+                    </div>
+                </div>
             </div>
-
-
         </section>
     );
 };

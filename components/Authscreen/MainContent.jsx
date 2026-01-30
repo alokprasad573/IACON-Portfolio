@@ -1,4 +1,4 @@
-import { memo} from 'react';
+import { memo } from 'react';
 
 import Header from '@/components/Authscreen/Header';
 import Scanner from '@/components/Authscreen/Scanner';
@@ -8,12 +8,12 @@ import Logs from '@/components/Authscreen/Logs';
 import Button from '@/components/Authscreen/Button';
 
 
-const MainContent = ({ statusText, isVerified, glyphText, actionLabel, logs, authState, setAuthState, setStatusText, setActionLabel, setGlyphText, addLog, wait, contentRef, handleClose } ) => {
+const MainContent = ({ statusText, isVerified, glyphText, actionLabel, logs, authState, setAuthState, setStatusText, setActionLabel, setGlyphText, addLog, wait, handleClose }) => {
 
     return (
         <>
             {/* Main Content */}
-            <div ref={contentRef} className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4">
                 {/* Header Section */}
                 <Header statusText={statusText} />
 

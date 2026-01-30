@@ -6,7 +6,7 @@ const CyberFrame = ({ children, screenRef, accentColor, glowLevel = '30' }) => {
     return (
         <section
             ref={screenRef}
-            className="relative w-full max-w-[550px] bg-[#030712]/95 border backdrop-blur-md overflow-hidden"
+            className="relative mx-auto w-full max-w-[550px] bg-[#030712]/95 border backdrop-blur-md overflow-hidden"
             style={{
                 clipPath: 'polygon(0% 20px, 20px 0%, calc(100% - 20px) 0%, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0% calc(100% - 20px))',
                 boxShadow: `0 0 ${glowLevel}px ${accentColor}33`,
