@@ -7,6 +7,7 @@ import Screen from "../ui/Screen";
 const TechArsenals = ({ techStack, index }) => {
     return (
         <section
+            id="arsenals"
             className="sticky top-0 w-full min-h-screen h-fit bg-black border-t border-yellow-500/10 pointer-events-none"
             style={{ zIndex: index }}
         >

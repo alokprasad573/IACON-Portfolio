@@ -15,7 +15,7 @@ import Hero from '@/components/HomePage/Hero/Hero';
 import TechArsenals from '@/components/HomePage/TechArsenals';
 import TraningModules from '@/components/HomePage/TraningModules';
 import Credentials from '@/components/HomePage/Credentials';
-import MissionLogs from '@/components/HomePage/MissionLogs';
+import OperationLogs from '@/components/HomePage/OperationLogs';
 
 
 
@@ -39,13 +39,13 @@ const App = () => {
         <Credentials certifications={certifications} index={40} />
 
         {/* Projects */}
-        <MissionLogs projects={projects} index={50} />
+        <OperationLogs projects={projects} index={50} />
       </div>
 
       {/* FIXED HUD - Outside ScrollStack to ensure fixed positioning works correctly */}
       <div className="flex fixed inset-0 pointer-events-none z-100 tracking-[0.4em] text-[12px] text-zinc-500 opacity-50">
         <div className="absolute bottom-6 left-10 ">
-          Autobot Comm Center // IACON
+          Autobot Comd Center // IACON
         </div>
         <div className="absolute bottom-6 right-10 flex items-center gap-2 ">
           <Activity size={12} className="animate-pulse" />

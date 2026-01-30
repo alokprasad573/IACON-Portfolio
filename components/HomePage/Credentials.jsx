@@ -7,6 +7,7 @@ import { FileCheck } from "lucide-react";
 const Credentials = ({ certifications, index }) => {
   return (
     <section
+      id="clearences"
       className="sticky top-0 w-full min-h-screen h-fit bg-black border-t border-yellow-500/10 pointer-events-none"
       style={{ zIndex: index }}
     >

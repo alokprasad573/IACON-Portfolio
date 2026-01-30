@@ -6,6 +6,7 @@ import { Package } from "lucide-react";
 const TraningModules = ({ education, index }) => {
     return (
         <section
+            id="modules"
             className="sticky top-0 w-full min-h-screen h-fit bg-black border-t border-yellow-500/10 pointer-events-none"
             style={{ zIndex: index }}
         >

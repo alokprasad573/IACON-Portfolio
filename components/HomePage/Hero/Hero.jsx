@@ -1,9 +1,11 @@
-import { Github, Linkedin, Mail } from "lucide-react";
+import { FolderArchive, Waypoints, Mail } from "lucide-react";
 
 
 const Hero = () => {
   return (
-    <section className="hero-contents sticky top-0 h-screen flex flex-col items-center justify-center text-center px-6 overflow-hidden">
+    <section
+      id="hero"
+      className="hero-contents sticky top-0 h-screen flex flex-col items-center justify-center text-center px-6 overflow-hidden">
       <div className="mb-6 inline-flex items-center gap-2 border border-yellow-500/20 px-4 py-1 rounded-full bg-yellow-500/5 backdrop-blur-md">
         <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-ping"></div>
         <span className="text-[12px] font-mono tracking-widest uppercase text-brand-yellow font-bold">IACON DATA STREAM : ACTIVE</span>
@@ -28,23 +30,23 @@ const Hero = () => {
         <div className="mt-5 flex flex-wrap justify-center gap-8 md:gap-12">
           {/* GitHub Link */}
           <a href="https://github.com/alokprasad573" className="group flex items-center gap-3 text-zinc-300 hover:text-brand-yellow transition-all">
-            <Github size={24} className="group-hover:scale-110 transition-transform" />
-            <span className="text-[10px] font-mono uppercase tracking-widest hidden md:block">Archive</span>
+            <FolderArchive size={24} className="group-hover:scale-110 transition-transform" />
+            <span className="text-[10px] tracking-[0.3em] font-mono uppercase hidden md:block">Archive</span>
           </a>
 
           {/* LinkedIn Link */}
           <a href="https://www.linkedin.com/in/alok-prasad-474962289/" className="group flex items-center gap-3 text-zinc-300 hover:text-brand-yellow transition-all">
-            <Linkedin size={24} className="group-hover:scale-110 transition-transform" />
-            <span className="text-[10px] font-mono uppercase tracking-widest hidden md:block">Technical Bio</span>
+            <Waypoints size={24} className="group-hover:scale-110 transition-transform" />
+            <span className="text-[10px] tracking-[0.3em] font-mono uppercase hidden md:block">SparkConnect</span>
           </a>
 
           {/* Email Link */}
           <a href="#COMM_LINK" className="group flex items-center gap-3 text-zinc-300 hover:text-brand-yellow transition-all">
             <Mail size={24} className="group-hover:scale-110 transition-transform" />
-            <span className="text-[10px] font-mono uppercase tracking-widest hidden md:block">Comm_Link</span>
+            <span className="text-[10px] tracking-[0.3em] font-mono uppercase hidden md:block">Comm_Link</span>
           </a>
         </div>
-        <div className='relative top-[8em]'>
+        <div className='text-center fixed left-1/2 -translate-x-1/2 bottom-[1.5em] -z-100'>
           <p className='text-underline text-brand-yellow/40'>Scroll Down to Explore</p>
         </div>
       </div>
