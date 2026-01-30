@@ -29,19 +29,19 @@ const Hero = () => {
           {/* GitHub Link */}
           <a href="https://github.com/alokprasad573" className="group flex items-center gap-3 text-zinc-300 hover:text-brand-yellow transition-all">
             <Github size={24} className="group-hover:scale-110 transition-transform" />
-            <span className="text-[10px] font-mono uppercase tracking-widest hidden md:block">Source_Code</span>
+            <span className="text-[10px] font-mono uppercase tracking-widest hidden md:block">Archive</span>
           </a>
 
           {/* LinkedIn Link */}
           <a href="https://www.linkedin.com/in/alok-prasad-474962289/" className="group flex items-center gap-3 text-zinc-300 hover:text-brand-yellow transition-all">
             <Linkedin size={24} className="group-hover:scale-110 transition-transform" />
-            <span className="text-[10px] font-mono uppercase tracking-widest hidden md:block">Neural_Network</span>
+            <span className="text-[10px] font-mono uppercase tracking-widest hidden md:block">Technical Bio</span>
           </a>
 
           {/* Email Link */}
           <a href="#COMM_LINK" className="group flex items-center gap-3 text-zinc-300 hover:text-brand-yellow transition-all">
             <Mail size={24} className="group-hover:scale-110 transition-transform" />
-            <span className="text-[10px] font-mono uppercase tracking-widest hidden md:block">Direct_Link</span>
+            <span className="text-[10px] font-mono uppercase tracking-widest hidden md:block">Comm_Link</span>
           </a>
         </div>
         <div className='relative top-[8em]'>

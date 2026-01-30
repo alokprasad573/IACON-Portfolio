@@ -10,7 +10,10 @@ const Navbar = () => {
                     <div className="w-15 h-15 flex items-center justify-center">
                         <Image src="/images/autobot_V.png" alt="Logo" width={150} height={150} />
                     </div>
-                    <span className="text-lg font-black tracking-tighter text-zinc-300 italic">B-127 | ALOK PRASAD</span>
+                    <span className="text-lg font-black tracking-wider text-zinc-300">
+                        B-127 | ALOK PRASAD
+                        <p className="text-[10px] text-yellow-500 uppercase tracking-[0.5em]">IACON // Sector_7</p>
+                    </span>
                 </div>
             </div>
         </nav>

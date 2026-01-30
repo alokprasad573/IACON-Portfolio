@@ -59,7 +59,7 @@
     text-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
   }
 
- h4,
+  h4,
   h5,
   h6 {
     @apply font-black tracking-tighter text-brand-yellow;
@@ -197,124 +197,32 @@
   }
 }
 
-/* 
-  --------------------------------------------------------------------------
-  SCROLL-DRIVEN ANIMATIONS (View Timeline)
-  --------------------------------------------------------------------------
-*/
-@supports (view-timeline-name: --layer) {
-
-  /* The container that defines the scroll-space for the section */
-  .stack-layer {
-    view-timeline-name: --layer;
-    view-timeline-axis: block;
-    /* position: relative;
-    width: 100%;
-    perspective: 1000px; */
-  }
-
-  /* The sticky element that performs the animation */
-  .scroll-layer {
-    animation:
-      crt-expand linear both,
-      stack-shrink linear both;
-    animation-timeline: --layer;
-    /* Entry: Reveal the section. Exit: Shrink it as the next one comes in */
-    animation-range: entry 0% entry 100%, exit 0% exit 100%;
-    will-change: transform, opacity, filter;
-  }
-
-  .revelation-content {
-    animation: fade-up 1s linear both;
-    animation-timeline: --layer;
-    animation-range: entry 80% entry 100%;
-  }
-
-  .scroll-shrink {
-    animation: shrink-text linear both;
-    animation-timeline: scroll(root);
-    animation-range: 0px 500px;
-    will-change: transform, opacity;
-  }
-
-  /* Utility for the very first section to be visible immediately */
-  .initial-visible {
-    animation: stack-shrink 1s linear both !important;
-    opacity: 1 !important;
-  }
-
-  .initial-reveal {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
-}
-
-
-
-@keyframes crt-expand {
-  0% {
-    transform: scaleX(0) scaleY(0.001);
-    opacity: 0;
-    filter: brightness(5) contrast(2);
-  }
-
-  45% {
-    transform: scaleX(1) scaleY(0.001);
-    opacity: 1;
-    filter: brightness(3);
-  }
-
-  100% {
-    transform: scaleX(1) scaleY(1);
-    opacity: 1;
-    filter: brightness(1);
-  }
-}
-
-@keyframes stack-shrink {
-  0% {
-    transform: scale(1) translateZ(0);
-    opacity: 1;
-    filter: blur(0px) brightness(1);
-  }
-
-  100% {
-    transform: scale(0.85) translateZ(-100px) translateY(-50px);
-    opacity: 0;
-    filter: blur(10px) brightness(0.1);
-  }
-}
-
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes shrink-text {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-
-  }
-
-  100% {
-    transform: scale(0.4);
-    opacity: 0;
-
-  }
-}
+/* SCROLL-DRIVEN ANIMATIONS REMOVED */
 
 /* Hardware Acceleration Class */
 .accelerated {
   will-change: transform, opacity;
   backface-visibility: hidden;
   transform: translateZ(0);
+}
+
+/* Custom Scrollbar Utility */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-brand-yellow) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  display: block;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 215, 0, 0.05);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-brand-yellow);
+  box-shadow: 0 0 10px var(--color-brand-yellow);
 }
