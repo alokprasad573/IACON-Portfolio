@@ -1,4 +1,3 @@
-
 import Screen from "../ui/Screen";
 import Image from "next/image";
 import { Github, ExternalLink } from "lucide-react";
@@ -11,18 +10,17 @@ const OperationLogs = ({ projects, index }) => {
     return (
         <section
             id="operation"
-            className="sticky top-40 w-full h-fit bg-black border-t border-yellow-500/10 pointer-events-none"
-            style={{ zIndex: index }}
+            className="w-full min-h-screen bg-black  pointer-events-none"
         >
-            <div className="relative w-full h-fit min-h-screen flex flex-col items-center justify-center px-4 md:px-12 pointer-events-auto">
-                <div className="w-full h-full max-w-[1600px] flex justify-around items-center p-8">
-                    <div className="w-full h-fit flex flex-col">
+            <div className="relative  w-full h-fit min-h-screen flex flex-col items-center justify-center px-4 md:px-12 pointer-events-auto">
+                <div className="w-full h-screen max-w-[1600px] flex justify-around">
+                    <div className="w-fit flex flex-col">
                         <div className="mb-8 shrink-0">
                             <h2 className="text-4xl md:text-6xl text-zinc-300 mb-2">Operation Logs</h2>
                             <p className="text-yellow-500  text-xs my-2 tracking-[0.2em] ">Operational History</p>
                             <div className="h-1 w-24 bg-yellow-500 shadow-[0_0_15px_#FFD700]"></div>
                         </div>
-                        <div className="w-full p-4">
+                        <div className="w-full flex flex-col">
                             <AnimatedList
                                 items={projects}
                                 onItemSelect={(item, index) => console.log(item, index)}
@@ -32,7 +30,7 @@ const OperationLogs = ({ projects, index }) => {
                                 renderItem={(proj, i, isSelected) => (
                                     <Screen
                                         key={i}
-                                        className={`h-[400px] w-[60vw]transition-all duration-300 ${isSelected ? 'ring-2 ring-yellow-500 shadow-[0_0_20px_rgba(255,215,0,0.3)]' : ''}`}
+                                        className={`h-[400px] w-[60vw] transition-all duration-300 ${isSelected ? 'ring-2 ring-yellow-500 shadow-[0_0_20px_rgba(255,215,0,0.3)]' : ''}`}
                                         glowLevel={isSelected ? 50 : 30}
                                     >
                                         <div className="text-yellow-500/60 text-[12px] mb-2">Operation_0{i + 1}</div>
@@ -66,19 +64,21 @@ const OperationLogs = ({ projects, index }) => {
                                 )}
                             />
                         </div>
+                        <div className="relative left-1/2 -translate-x-1/2 mt-20">
+                            <div className="flex flex-col gap-3 items-center justify-center font-black uppercase text-[10px] tracking-[0.3em] text-gray-500">
+                                <div className="flex gap-3">
+                                    <a href="https://github.com/alokprasad573" className="hover:text-yellow-500">Archive</a>
+                                    <a href="https://www.linkedin.com/in/alok-prasad-474962289/" className="hover:text-yellow-500">SparkConnect</a>
+                                    <a href="#" className="hover:text-yellow-500">Email</a>
+                                </div>
+                                <p className="text-yellow-500/20 text-[12px] tracking-[0.4em] uppercase">End Of Transmission // ©2027</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <section className="absolute bottom-6 text-center">
-                    <div className="flex flex-col gap-3 items-center justify-center font-black uppercase text-[10px] tracking-[0.5em] text-gray-500">
-                        <div className="flex gap-3">
-                            <a href="https://github.com/alokprasad573" className="hover:text-yellow-500">Archive</a>
-                            <a href="https://www.linkedin.com/in/alok-prasad-474962289/" className="hover:text-yellow-500">SparkConnect</a>
-                            <a href="#" className="hover:text-yellow-500">Email</a>
-                        </div>
-                        <p className="text-yellow-500/20 text-[12px] tracking-[0.4em] uppercase">End Of Transmission // ©2027</p>
-                    </div>
-                </section>
+
             </div>
+
 
         </section>
     );

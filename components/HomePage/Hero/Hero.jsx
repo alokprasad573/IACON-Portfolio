@@ -47,7 +47,7 @@ const Hero = () => {
           </a>
         </div>
         <div className='text-center fixed left-1/2 -translate-x-1/2 bottom-[1.5em] -z-100'>
-          <p className='text-underline text-brand-yellow/40'>Scroll Down to Explore</p>
+          <p className='text-underline tracking-widest text-brand-yellow/40'>Scroll Down to Explore</p>
         </div>
       </div>
     </section>

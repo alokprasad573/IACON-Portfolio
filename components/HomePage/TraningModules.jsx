@@ -7,8 +7,7 @@ const TraningModules = ({ education, index }) => {
     return (
         <section
             id="modules"
-            className="sticky top-0 w-full min-h-screen h-fit bg-black border-t border-yellow-500/10 pointer-events-none"
-            style={{ zIndex: index }}
+            className="w-full min-h-screen bg-black pointer-events-none"
         >
             <div className="relative w-full h-full min-h-screen flex items-center justify-center p-4 md:p-12 pointer-events-auto">
                 <div className="w-full h-full max-w-[1600px] flex justify-center items-center p-8">

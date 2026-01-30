@@ -90,7 +90,7 @@ const AnimatedList = ({
     const container = listRef.current;
     const selectedItem = container.querySelector(`[data-index="${selectedIndex}"]`);
     if (selectedItem) {
-      const extraMargin = 50;
+      const extraMargin = 0;
       const containerScrollTop = container.scrollTop;
       const containerHeight = container.clientHeight;
       const itemTop = selectedItem.offsetTop;
@@ -108,7 +108,7 @@ const AnimatedList = ({
   }, [selectedIndex, keyboardNav]);
 
   return (
-    <div className={`relative w-[80vw] top-2 left-1/2 -translate-x-1/2 overflow-hidden ${className}`}>
+    <div className={`relative w-[90vw] px-12 py-2 mx-atuo top-2 left-1/2 -translate-x-1/2 overflow-hidden ${className}`}>
       <div
         ref={listRef}
         className={`overflow-y-auto ${displayScrollbar
@@ -123,7 +123,7 @@ const AnimatedList = ({
         }}
       >
         {items.map((item, index) => (
-          <div key={index} className='m-4'>
+          <div key={index}>
             <AnimatedItem
               delay={0.1}
               index={index}
@@ -133,7 +133,7 @@ const AnimatedList = ({
               {renderItem ? (
                 renderItem(item, index, selectedIndex === index)
               ) : (
-                <div className={`p-4 bg-[#111] rounded-lg ${selectedIndex === index ? 'bg-[#222]' : ''} ${itemClassName}`}>
+                <div className={`bg-[#111] rounded-lg ${selectedIndex === index ? 'bg-[#222]' : ''} ${itemClassName}`}>
                   <p className="text-white m-0">{item}</p>
                 </div>
               )}

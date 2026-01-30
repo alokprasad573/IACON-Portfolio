@@ -2,12 +2,10 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { education, certifications, techStack, projects } from '@/lib/constants/index';
-import { Package, Activity, } from 'lucide-react';
+import { Package, Activity, Github, ExternalLink } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
-
-gsap.registerPlugin(ScrollTrigger);
+import ScrollStack, { ScrollStackItem } from '@/components/ui/animation/ScrollStack';
 
 
 import Navbar from '@/components/ui/Navbar';
@@ -28,19 +26,21 @@ const App = () => {
       <Navbar />
 
       <Hero />
-      <div className="relative z-20 stack-container">
-        {/* TechStack */}
-        <TechArsenals techStack={techStack} index={20} />
 
-        {/* Education */}
-        <TraningModules education={education} index={30} />
-
-        {/* Certificates*/}
-        <Credentials certifications={certifications} index={40} />
-
-        {/* Projects */}
-        <OperationLogs projects={projects} index={50} />
-      </div>
+      <ScrollStack>
+          <ScrollStackItem>
+            <TechArsenals techStack={techStack} />
+          </ScrollStackItem>
+          <ScrollStackItem>
+            <TraningModules education={education} />
+          </ScrollStackItem>
+          <ScrollStackItem>
+            <Credentials certifications={certifications} />
+          </ScrollStackItem>
+          <ScrollStackItem>
+            <OperationLogs projects={projects} />
+          </ScrollStackItem>
+        </ScrollStack>
 
       {/* FIXED HUD - Outside ScrollStack to ensure fixed positioning works correctly */}
       <div className="flex fixed inset-0 pointer-events-none z-100 tracking-[0.4em] text-[12px] text-zinc-500 opacity-50">
@@ -52,7 +52,7 @@ const App = () => {
           <span>CYBRTRN OS V4.2.6</span>
         </div>
       </div>
-      
+
     </div>
   );
 };
