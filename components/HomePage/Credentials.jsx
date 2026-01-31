@@ -18,7 +18,7 @@ const Credentials = ({ certifications, index }) => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 p-2 gap-6 pointer-events-auto">
           {certifications.map((cert, i) => (
-            <CyberFrame key={i} className="px-12 py-15">
+            <CyberFrame key={i} delay={i * 0.1} className="px-12 py-15">
               <div className="flex items-start gap-4 mb-4">
                 <div className="relative w-14 h-14 shrink-0 border border-cyan-400/20 overflow-hidden bg-white/5">
                   <Image
@@ -56,7 +56,7 @@ const Credentials = ({ certifications, index }) => {
             </CyberFrame>
           ))}
         </div>
-        
+
       </div>
     </section>
   );

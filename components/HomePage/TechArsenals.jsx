@@ -13,8 +13,8 @@ const TechArsenals = ({ techStack, index }) => {
                     <div className="h-1 w-24 bg-cyan-400 shadow-[0_0_15px_#22d3ee]"></div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pointer-events-auto">
-                    {Object.entries(techStack).map(([cat, skills]) => (
-                        <CyberFrame key={cat} className="h-[250px] px-12 py-10">
+                    {Object.entries(techStack).map(([cat, skills], i) => (
+                        <CyberFrame key={cat} delay={i * 0.1} className="h-[250px] px-12 py-10">
                             <h3 className="text-cyan-100 text-s mb-4 tracking-[0.2em] border-b border-cyan-400/20 pb-2">{cat}</h3>
                             <div className="flex flex-wrap gap-2">
                                 {skills.map(s => (

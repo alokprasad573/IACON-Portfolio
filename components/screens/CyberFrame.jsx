@@ -1,6 +1,12 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+}
 
 /**
  * Unified CyberFrame Component
@@ -13,10 +19,38 @@ import React, { useRef } from 'react';
  * @param {string} [props.className] - Additional classes.
  * @param {boolean} [props.noatmo=false] - If true, disables the entrance animation (useful for Hero elements).
  */
-const CyberFrame = ({ children, screenRef: externalRef, accentColor = "#22d3ee", glowLevel = 30, className = "", noatmo = false }) => {
+const CyberFrame = ({ children, screenRef: externalRef, accentColor = "#22d3ee", glowLevel = 30, className = "", noatmo = false, delay = 0 }) => {
     const internalRef = useRef(null);
     const ref = externalRef || internalRef;
     const accent = accentColor || "#22d3ee";
+
+    useEffect(() => {
+        if (noatmo) return;
+
+        const el = ref.current;
+        if (!el) return;
+
+        const animation = gsap.fromTo(el,
+            { scale: 0.9, opacity: 0 },
+            {
+                scale: 1,
+                opacity: 1,
+                duration: 1.2,
+                delay: delay,
+                ease: "expo.out",
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 85%", // Starts earlier to be seen clearly as it scrolls in
+                    toggleActions: "play none none reverse"
+                }
+            }
+        );
+
+        return () => {
+            if (animation.scrollTrigger) animation.scrollTrigger.kill();
+            animation.kill();
+        };
+    }, [noatmo, ref]);
 
     return (
         <section

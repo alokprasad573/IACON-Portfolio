@@ -16,7 +16,7 @@ const TraningModules = ({ education, index }) => {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full pointer-events-auto">
                     {education.map((edu, index) => (
-                        <CyberFrame key={index} className="h-[350px] px-12 py-10 flex flex-col">
+                        <CyberFrame key={index} delay={index * 0.1} className="h-[350px] px-12 py-10 flex flex-col">
                             <div className="flex items-center justify-between gap-3 text-cyan-400/60">
                                 <div className="flex items-center gap-3">
                                     <Package size={20} />

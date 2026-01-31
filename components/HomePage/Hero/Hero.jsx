@@ -1,8 +1,39 @@
-import { useRef } from "react";
+'use client';
+
+import { useRef, useEffect } from "react";
 import { FolderArchive, Waypoints, Mail, ChevronsDown, Shield, Cpu, BookOpen, Layers, Database, SatelliteDish, Swords, Package, Package2, LandPlot, PackageCheck } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const Hero = ({ onCommLinkClick }) => {
   const containerRef = useRef(null);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    // Fade out and move up slightly as the user scrolls down
+    const animation = gsap.to(el, {
+      opacity: 0,
+      y: -50,
+      ease: "none",
+      scrollTrigger: {
+        trigger: el,
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      }
+    });
+
+    return () => {
+      if (animation.scrollTrigger) animation.scrollTrigger.kill();
+      animation.kill();
+    };
+  }, []);
 
   const handleCommLinkClick = (e) => {
     e.preventDefault();

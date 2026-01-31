@@ -1,3 +1,5 @@
+'use client';
+
 import CyberFrame from "@/components/screens/CyberFrame";
 import Image from "next/image";
 import { Github, ExternalLink, Activity, ChevronLeft, ChevronRight } from "lucide-react";
@@ -103,7 +105,10 @@ const OperationLogs = ({ projects }) => {
                                 }}
                                 onClick={() => setSelectedProject({ ...proj, displayId: i })}
                             >
-                                <CyberFrame noatmo={true} className="h-[550px] px-8 py-10 flex flex-col bg-cyan-950/20 hover:bg-cyan-950/30 cursor-pointer hover:border-cyan-400/50 group/card">
+                                <CyberFrame
+                                    delay={i * 0.1}
+                                    className="h-[550px] px-8 py-10 flex flex-col bg-cyan-950/20 hover:bg-cyan-950/30 cursor-pointer hover:border-cyan-400/50 group/card"
+                                >
                                     <div className="flex items-center justify-between gap-3 text-cyan-400/60 mb-4 font-mono">
                                         <span className="text-[12px] tracking-[0.2em] uppercase opacity-70">Operation_0{i + 1}</span>
                                         <div className="text-[10px] text-cyan-400/80 border border-cyan-400/30 px-2 py-0.5 rounded-sm uppercase animate-pulse">
@@ -214,7 +219,7 @@ const OperationLogs = ({ projects }) => {
                             exit={{ opacity: 0, scale: 0.95 }}
                             className="relative w-full max-w-4xl z-10"
                         >
-                            <CyberFrame noatmo={true} className="w-full bg-cyan-950/20 hover:bg-cyan-950/30 p-8 md:p-12 overflow-y-auto max-h-[90vh]">
+                            <CyberFrame className="w-full bg-cyan-950/20 hover:bg-cyan-950/30 p-8 md:p-12 overflow-y-auto max-h-[90vh]">
                                 <div className="flex flex-col gap-8">
                                     <div className="flex items-center justify-between border-b border-cyan-400/20 pb-6">
                                         <div className="flex items-center gap-3">
