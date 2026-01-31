@@ -31,7 +31,7 @@ const OperationLogs = ({ projects }) => {
     };
 
     return (
-        <section id="operation" className="w-full min-h-screen bg-black px-6 py-12 md:px-12 md:py-20 overflow-hidden">
+        <section id="operation" className="w-full min-h-screen px-6 py-12 md:px-12 md:py-20 overflow-hidden">
             <div className="w-full flex flex-col h-full">
                 {/* Section Header - Consistent with Training Modules & Tech Arsenals */}
                 <div className="mb-12 shrink-0 flex justify-between items-end">

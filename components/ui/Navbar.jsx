@@ -1,14 +1,24 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Menu, X } from 'lucide-react';
 import Button from './Button';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Navbar = () => {
     const navRef = useRef(null);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const navLinks = [
+        { name: 'Inbound', href: '#inbound' },
+        { name: 'Arsenals', href: '#arsenals' },
+        { name: 'Modules', href: '#modules' },
+        { name: 'Operation', href: '#operation' },
+        { name: 'Clearences', href: '#clearences' },
+    ];
 
     useGSAP(() => {
         gsap.set(navRef.current, { yPercent: -100 });
@@ -17,7 +27,6 @@ const Navbar = () => {
             start: "top top",
             end: 99999,
             onUpdate: (self) => {
-                // Show navbar when scrolled down > 100px
                 const shouldShow = self.scroll() > 100;
                 gsap.to(navRef.current, {
                     yPercent: shouldShow ? 0 : -100,
@@ -29,46 +38,73 @@ const Navbar = () => {
     }, { scope: navRef });
 
     return (
-        <nav ref={navRef} className="fixed top-0 left-0 w-full bg-[#0a1e2f]/90 border-b border-cyan-400/20 backdrop-blur-xl z-50">
-            <div className="max-w-7xl mx-auto px-8 h-20 flex items-center justify-between">
+        <nav ref={navRef} className="fixed top-0 left-0 w-full bg-cyan-950/20 backdrop-blur-xl z-50 border-b border-cyan-400/10">
+            <div className="max-w-7xl mx-auto px-6 md:px-12 h-20 flex flex-row items-center justify-between">
                 {/* Left side Logo */}
-                <div className="flex items-center gap-2">
-                    <div className="w-15 h-15 flex items-center justify-center">
-                        <Image src="/images/autobot_V.png" alt="Logo" width={150} height={150} className="brightness-150 contrast-125 saturate-0 sepia hue-rotate-180 text-cyan-400" />
+                <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 flex items-center justify-center">
+                        <Image src="/images/autobot_UV.png" alt="Logo" width={120} height={120} className="object-contain" />
                     </div>
-                    <span className="text-lg font-black tracking-wider text-cyan-100">
-                        B-127 | ALOK PRASAD
-                        <p className="text-[10px] text-cyan-400 uppercase tracking-[0.5em]">IACON // Sector_7</p>
-                    </span>
+                    <div className="flex flex-col">
+                        <span className="text-lg font-black tracking-wider text-cyan-100 leading-tight">
+                            B-127 | ALOK PRASAD
+                        </span>
+                        <p className="text-[9px] text-cyan-400 uppercase tracking-[0.4em] font-bold">IACON // Sector_7</p>
+                    </div>
                 </div>
-                {/* CenternLinks */}
-                <div className="hidden md:flex items-center gap-8">
-                    {[
-                        { name: 'Inbound', href: '#inbound' },
-                        { name: 'Arsenals', href: '#arsenals' },
-                        { name: 'Modules', href: '#modules' },
-                        { name: 'Operation', href: '#operation' },
-                        { name: 'Clearences', href: '#clearences' },
-                    ].map((link) => (
+
+                {/* Desktop Links */}
+                <div className="hidden md:flex items-center gap-10">
+                    {navLinks.map((link) => (
                         <a
                             key={link.name}
                             href={link.href}
-                            className="text-[12px] font-bold uppercase tracking-[0.2em] text-cyan-200/60 hover:text-cyan-400 transition-colors"
+                            className="text-[11px] font-black uppercase tracking-[0.2em] text-cyan-200/50 hover:text-cyan-400 transition-all hover:scale-105"
                         >
                             {link.name}
                         </a>
                     ))}
                 </div>
 
-                {/* Right side Comm Links */}
-                <div className="flex items-center">
-                    <Button variant="primary">
-                        Comm_Link
-                    </Button>
+                {/* Right side Actions */}
+                <div className="flex items-center gap-4">
+                    <div className="hidden md:block">
+                        <Button variant="primary">
+                            Comm_Link
+                        </Button>
+                    </div>
+
+                    {/* Mobile Menu Toggle */}
+                    <button
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        className="md:hidden text-cyan-400 p-2 hover:bg-cyan-400/10 rounded-sm transition-colors border border-cyan-400/20"
+                    >
+                        {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                    </button>
+                </div>
+            </div>
+
+            {/* Mobile Navigation Drawer */}
+            <div className={`fixed top-20 left-0 w-full bg-black/95 backdrop-blur-2xl border-b border-cyan-400/20 transition-all duration-300 overflow-hidden ${isMenuOpen ? 'max-h-screen' : 'max-h-0'}`}>
+                <div className="flex flex-col p-8 gap-6">
+                    {navLinks.map((link) => (
+                        <a
+                            key={link.name}
+                            href={link.href}
+                            onClick={() => setIsMenuOpen(false)}
+                            className="text-sm font-black uppercase tracking-[0.3em] text-cyan-200 hover:text-cyan-400 border-l-2 border-transparent hover:border-cyan-400 pl-4 transition-all"
+                        >
+                            {link.name}
+                        </a>
+                    ))}
+                    <div className="pt-4 border-t border-cyan-400/10">
+                        <Button variant="primary" className="w-full">
+                            Comm_Link
+                        </Button>
+                    </div>
                 </div>
             </div>
         </nav>
     );
 };
-
 export default Navbar;

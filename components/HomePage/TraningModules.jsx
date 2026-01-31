@@ -6,7 +6,7 @@ const TraningModules = ({ education, index }) => {
     return (
         <section
             id="modules"
-            className="w-full min-h-screen bg-black px-6 py-12 md:px-12 md:py-20"
+            className="w-full min-h-screen px-6 py-12 md:px-12 md:py-20"
         >
             <div className="w-full  flex flex-col">
                 <div className="mb-12 shrink-0">
