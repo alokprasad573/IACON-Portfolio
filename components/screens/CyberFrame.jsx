@@ -41,8 +41,6 @@ const CyberFrame = ({ children, screenRef: externalRef, accentColor = "#22d3ee",
                 color: accent,
             }}
         >
-            {/* Background Texture: Cyber Grid */}
-            {/* <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: `radial-gradient(${accent} 1px, transparent 1px)`, backgroundSize: '20px 20px' }} /> */}
 
             {/* Corner Brackets (Mechanical Accents) */}
             <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 opacity-100 transition-all duration-500" style={{ borderColor: accent }} />
@@ -76,11 +74,8 @@ const CyberFrame = ({ children, screenRef: externalRef, accentColor = "#22d3ee",
                 {children}
             </div>
 
-            {/* Scanline Overlay */}
-            {/* <div className="absolute inset-0 pointer-events-none opacity-[0.07] bg-[linear-gradient(rgba(34,211,238,0)_50%,rgba(34,211,238,0.1)_50%)] bg-size-[100%_4px]" /> */}
-
-            {/* Glitch Overlay (on Hover) */}
-            <div className="absolute inset-0 pointer-events-none opacity-0 group-hover/frame:opacity-5 transition-opacity duration-300 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(34,211,238,0.5)_2px,rgba(34,211,238,0.5)_4px)]" />
+            {/* Inner Shadow Overlay (on Hover) */}
+<div className="absolute inset-0 pointer-events-none opacity-0 group-hover/frame:opacity-100 transition-opacity duration-300 shadow-inner" />
         </section>
     );
 };

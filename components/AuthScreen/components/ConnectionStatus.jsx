@@ -2,10 +2,10 @@
 
 const ConnectionStatus = ({ authState, progressBarRef, connectionStatus }) => {
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 w-200px">
             <span className="text-[10px] tracking-widest opacity-60">IACON MAINFRAME UPLINK: AUTOBOT SECURE CHANNEL
 </span>
-            <div className={`relative w-full p-4 text-xs font-extrabold tracking-[0.2em] uppercase border border-current bg-current/5 transition-opacity duration-300 overflow-hidden ${authState === 'SCANNING' ? 'opacity-0' : 'opacity-100'}`}>
+            <div className={`relative p-4 text-xs font-extrabold tracking-[0.2em] uppercase border border-current bg-current/5 transition-opacity duration-300 overflow-hidden ${authState === 'SCANNING' ? 'opacity-0' : 'opacity-100'}`}>
                 {/* Progress Bar Background Overlay */}
                 <div
                     ref={progressBarRef}

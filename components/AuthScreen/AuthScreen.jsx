@@ -2,15 +2,15 @@ import { memo } from 'react';
 import { useSystem } from '@/context/SystemContext';
 import { runAuthSequence, redirectToHome } from '@/lib/scripts';
 
-import Header from '@/components/Authscreen/Header';
-import Scanner from '@/components/Authscreen/Scanner';
-import ActionStatus from '@/components/Authscreen/ActionStatus';
-import DetailPanel from '@/components/Authscreen/DetailPanel';
-import Logs from '@/components/Authscreen/Logs';
+import Header from '@/components/AuthScreen/components/Header';
+import Scanner from '@/components/AuthScreen/components/Scanner';
+import ActionStatus from '@/components/AuthScreen/components/ActionStatus';
+import DetailPanel from '@/components/AuthScreen/components/DetailPanel';
+import Logs from '@/components/AuthScreen/components/Logs';
 import Button from '@/components/ui/Button';
 
 
-const MainContent = () => {
+const AuthScreen = () => {
     const {
         statusText, isVerified, glyphText, actionLabel, logs,
         authState, setAuthState, setStatusText, setActionLabel, setGlyphText,
@@ -67,4 +67,4 @@ const MainContent = () => {
     )
 }
 
-export default memo(MainContent);
+export default memo(AuthScreen);
