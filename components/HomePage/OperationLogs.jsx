@@ -105,14 +105,14 @@ const OperationLogs = ({ projects }) => {
                             >
                                 <CyberFrame noatmo={true} className="h-[550px] px-8 py-10 flex flex-col bg-cyan-950/20 hover:bg-cyan-950/30 cursor-pointer hover:border-cyan-400/50 group/card">
                                     <div className="flex items-center justify-between gap-3 text-cyan-400/60 mb-4 font-mono">
-                                        <span className="text-[10px] tracking-[0.2em] uppercase opacity-70">Log_Session_0{i + 1}</span>
-                                        <div className="text-[9px] text-cyan-400/80 border border-cyan-400/30 px-2 py-0.5 rounded-sm uppercase">
+                                        <span className="text-[12px] tracking-[0.2em] uppercase opacity-70">Operation_0{i + 1}</span>
+                                        <div className="text-[10px] text-cyan-400/80 border border-cyan-400/30 px-2 py-0.5 rounded-sm uppercase animate-pulse">
                                             {proj.deployStatus || "ACTIVE"}
                                         </div>
                                     </div>
 
                                     <div className="flex-1 flex flex-col pt-2">
-                                        <h4 className="text-lg text-cyan-100 font-black leading-tight border-b border-cyan-400/20 pb-4 mb-4 h-16 flex items-center uppercase tracking-tight">
+                                        <h4 className="text-xl text-cyan-100  border-b border-cyan-400/20 pb-4 mb-4 h-16 flex items-center uppercase tracking-wider">
                                             {proj.title}
                                         </h4>
 
@@ -126,19 +126,36 @@ const OperationLogs = ({ projects }) => {
                                                     sizes="(max-width: 768px) 100vw, 33vw"
                                                 />
                                             </div>
-                                            <p className="text-[11px] text-cyan-100/60 leading-relaxed line-clamp-4 font-medium italic">
+                                            <p className="text-[12px] text-cyan-100/60 leading-relaxed line-clamp-4 font-medium">
                                                 {proj.description}
                                             </p>
                                         </div>
 
-                                        <div className="grid grid-cols-2 gap-4 pt-4 border-t border-cyan-400/10 mt-2">
-                                            <div className="flex flex-col">
-                                                <span className="text-[8px] uppercase font-bold text-cyan-400/30 mb-1 tracking-widest">Entry_Point</span>
-                                                <span className="text-[9px] font-bold text-cyan-400 uppercase tracking-widest">Local_Archive</span>
+                                        {/* Action Links - Consistent bottom layout */}
+                                        <div className="grid grid-cols-2 gap-4 py-4 border-t border-cyan-400/10">
+                                            <div>
+                                                <div className="text-[10px] uppercase font-bold text-cyan-400/40 mb-1 tracking-widest">Archive</div>
+                                                <a
+                                                    href={proj.github}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    onClick={(e) => e.stopPropagation()}
+                                                    className="flex items-center gap-2 text-[10px] font-bold text-cyan-400 hover:text-white transition-colors uppercase tracking-[0.2em]"
+                                                >
+                                                    <Github size={14} /> Source
+                                                </a>
                                             </div>
-                                            <div className="text-right flex flex-col">
-                                                <span className="text-[8px] uppercase font-bold text-cyan-400/30 mb-1 tracking-widest">Sync_Status</span>
-                                                <span className="text-[9px] font-bold text-cyan-100 uppercase tracking-widest">Synchronized</span>
+                                            <div className="text-right">
+                                                <div className="text-[10px] uppercase font-bold text-cyan-400/40 mb-1 tracking-widest">Uplink</div>
+                                                <a
+                                                    href={proj.link}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    onClick={(e) => e.stopPropagation()}
+                                                    className="flex items-center justify-end gap-2 text-[10px] font-bold text-cyan-400 hover:text-white transition-colors uppercase tracking-[0.2em]"
+                                                >
+                                                    Link <ExternalLink size={14} />
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -164,18 +181,18 @@ const OperationLogs = ({ projects }) => {
                 </div>
 
                 {/* Section Footer */}
-                <div className="w-full relative mt-auto pt-8 flex justify-center items-end pb-4 border-t border-cyan-400/5">
-                    <div className="absolute bottom-4 left-0 tracking-[0.4em] text-[10px] text-cyan-500/30 hidden md:block uppercase font-bold">
+                <div className="w-full relative mt-auto pt-8 flex justify-center items-end pb-4 border-t border-cyan-400/5 tracking-[0.2em] uppercase text-xs">
+                    <div className="absolute bottom-4 left-0  text-cyan-500/30 hidden md:block  font-bold">
                         Archive_Access_Verified
                     </div>
                     <div className="flex flex-col gap-2 items-center justify-center">
-                        <p className="text-cyan-400/10 text-[10px] tracking-[0.6em] uppercase font-black">
-                            End Of Transmission // PROTOCOL_SIGMA
+                        <p className="text-cyan-400/10  uppercase font-black">
+                            AUTOBOT_CMMD_CNTR // IACON [CYBERTRON - SECTOR_1]
                         </p>
                     </div>
-                    <div className="absolute bottom-4 right-0 flex items-center gap-2 tracking-[0.4em] text-[10px] text-cyan-500/30 md:flex font-bold">
-                        <Activity size={12} />
-                        <span>TRANS-COMP V4</span>
+                    <div className="absolute bottom-4 right-0 flex items-center gap-2  text-cyan-500/30 md:flex font-bold">
+
+                        <span>CYBRTRN OS v2.42.1</span>
                     </div>
                 </div>
             </div>
@@ -189,7 +206,7 @@ const OperationLogs = ({ projects }) => {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setSelectedProject(null)}
-                            className="absolute inset-0 bg-black/95 backdrop-blur-xl cursor-pointer"
+                            className="absolute inset-0  backdrop-blur-xl cursor-pointer"
                         />
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95 }}
@@ -197,7 +214,7 @@ const OperationLogs = ({ projects }) => {
                             exit={{ opacity: 0, scale: 0.95 }}
                             className="relative w-full max-w-4xl z-10"
                         >
-                            <CyberFrame noatmo={true} className="w-full bg-black/80 p-8 md:p-12 overflow-y-auto max-h-[90vh]">
+                            <CyberFrame noatmo={true} className="w-full bg-cyan-950/20 hover:bg-cyan-950/30 p-8 md:p-12 overflow-y-auto max-h-[90vh]">
                                 <div className="flex flex-col gap-8">
                                     <div className="flex items-center justify-between border-b border-cyan-400/20 pb-6">
                                         <div className="flex items-center gap-3">
@@ -216,7 +233,7 @@ const OperationLogs = ({ projects }) => {
                                         {selectedProject.title}
                                     </h3>
                                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                                        <div className="relative aspect-video w-full border border-cyan-400/20 overflow-hidden bg-black shadow-[0_0_50px_rgba(34,211,238,0.2)]">
+                                        <div className="relative aspect-video w-full border border-cyan-400/20 overflow-hidden shadow-[0_0_50px_rgba(34,211,238,0.2)]">
                                             <Image src={selectedProject.image} alt={selectedProject.title} fill className="object-cover" />
                                         </div>
                                         <div className="flex flex-col gap-6">

@@ -162,6 +162,7 @@
   from {
     top: 0%;
   }
+
   to {
     top: 100%;
   }
@@ -176,4 +177,20 @@
   z-index: 20;
   pointer-events: none;
   animation: scan 4s linear infinite;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(34, 211, 238, 0.1);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 211, 238, 0.3);
 }

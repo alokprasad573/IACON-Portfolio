@@ -1,3 +1,5 @@
+'use client';
+
 import { useRef, useState } from 'react';
 import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
@@ -8,7 +10,7 @@ import Button from './Button';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Navbar = () => {
+const Navbar = ({ onCommLinkClick }) => {
     const navRef = useRef(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -55,10 +57,10 @@ const Navbar = () => {
                         <Image src="/images/autobot_UV.png" alt="Logo" width={120} height={120} className="object-contain" />
                     </div>
                     <div className="flex flex-col">
+                        <p className="text-[9px] text-cyan-400 uppercase tracking-[0.4em] font-bold">UNIT ID | NICKNAME</p>
                         <span className="text-lg font-black tracking-wider text-cyan-100 leading-tight">
                             B-127 | ALOK PRASAD
                         </span>
-                        <p className="text-[9px] text-cyan-400 uppercase tracking-[0.4em] font-bold">IACON // Sector_7</p>
                     </div>
                 </div>
 
@@ -78,7 +80,7 @@ const Navbar = () => {
                 {/* Right side Actions */}
                 <div className="flex items-center gap-4">
                     <div className="hidden md:block">
-                        <Button variant="primary">
+                        <Button variant="primary" onClick={onCommLinkClick}>
                             Comm_Link
                         </Button>
                     </div>
@@ -107,7 +109,7 @@ const Navbar = () => {
                         </a>
                     ))}
                     <div className="pt-4 border-t border-cyan-400/10">
-                        <Button variant="primary" className="w-full">
+                        <Button variant="primary" className="w-full" onClick={() => { onCommLinkClick(); setIsMenuOpen(false); }}>
                             Comm_Link
                         </Button>
                     </div>

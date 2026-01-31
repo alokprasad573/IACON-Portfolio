@@ -1,8 +1,13 @@
 import { useRef } from "react";
-import { FolderArchive, Waypoints, Mail, ChevronsDown, Shield, Cpu, BookOpen, Layers } from "lucide-react";
+import { FolderArchive, Waypoints, Mail, ChevronsDown, Shield, Cpu, BookOpen, Layers, Database, SatelliteDish, Swords, Package, Package2, LandPlot, PackageCheck } from "lucide-react";
 
-const Hero = () => {
+const Hero = ({ onCommLinkClick }) => {
   const containerRef = useRef(null);
+
+  const handleCommLinkClick = (e) => {
+    e.preventDefault();
+    if (onCommLinkClick) onCommLinkClick();
+  };
 
   return (
     <section
@@ -48,23 +53,23 @@ const Hero = () => {
         <div className="mt-12  bg-cyan-950/15 hidden md:grid grid-cols-4 gap-4 max-w-2xl mx-auto border-y border-cyan-400/10 py-6">
 
           <a href="#arsenals" className="flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-110 border-l border-cyan-400/10">
-            <Cpu size={18} className="text-cyan-400" />
-            <span className="text-[9px] tracking-[0.2em] text-cyan-600 uppercase">Protocol 02</span>
+            <Swords size={18} className="text-cyan-400" />
+            <span className="text-[9px] tracking-[0.2em] text-cyan-600 uppercase">Directive 02</span>
             <span className="text-[10px] tracking-widest text-cyan-200 font-bold uppercase">Arsenals</span>
           </a>
           <a href="#modules" className="flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-110 border-l border-cyan-400/10">
-            <BookOpen size={18} className="text-cyan-400" />
-            <span className="text-[9px] tracking-[0.2em] text-cyan-600 uppercase">Protocol 03</span>
+            <Package size={18} className="text-cyan-400" />
+            <span className="text-[9px] tracking-[0.2em] text-cyan-600 uppercase">Directive 03</span>
             <span className="text-[10px] tracking-widest text-cyan-200 font-bold uppercase">Modules</span>
           </a>
           <a href="#clearences" className="flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-110 border-l border-cyan-400/10">
-            <Shield size={18} className="text-cyan-400" />
-            <span className="text-[9px] tracking-[0.2em] text-cyan-600 uppercase">Protocol 05</span>
+            <PackageCheck size={18} className="text-cyan-400" />
+            <span className="text-[9px] tracking-[0.2em] text-cyan-600 uppercase">Directive 05</span>
             <span className="text-[10px] tracking-widest text-cyan-200 font-bold uppercase">Clearances</span>
           </a>
           <a href="#operation" className="flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-110 border-l border-cyan-400/10">
-            <Layers size={18} className="text-cyan-400" />
-            <span className="text-[9px] tracking-[0.2em] text-cyan-600 uppercase">Protocol 04</span>
+            <LandPlot size={18} className="text-cyan-400" />
+            <span className="text-[9px] tracking-[0.2em] text-cyan-600 uppercase">Directive 04</span>
             <span className="text-[10px] tracking-widest text-cyan-200 font-bold uppercase">Operation</span>
           </a>
         </div>
@@ -72,7 +77,7 @@ const Hero = () => {
         {/* --- SOCIAL LINKS --- */}
         <div className="mt-12 flex flex-wrap items-center justify-center gap-8 md:gap-12 relative z-10">
           <a href="https://github.com/alokprasad573" className="group flex items-center gap-3 text-cyan-500 hover:text-cyan-400 hover:scale-110 transition-all duration-300">
-            <FolderArchive size={24} />
+            <Database size={24} />
             <span className="text-[10px] tracking-[0.3em] font-mono uppercase hidden md:block">Archive</span>
           </a>
 
@@ -81,8 +86,12 @@ const Hero = () => {
             <span className="text-[10px] tracking-[0.3em] font-mono uppercase hidden md:block">SparkConnect</span>
           </a>
 
-          <a href="mailto:contact@example.com" className="group flex items-center gap-3 text-cyan-500 hover:text-cyan-400 hover:scale-110 transition-all duration-300">
-            <Mail size={24} />
+          <a
+            href="#comm-link"
+            onClick={handleCommLinkClick}
+            className="group flex items-center gap-3 text-cyan-500 hover:text-cyan-400 hover:scale-110 transition-all duration-300"
+          >
+            <SatelliteDish size={24} />
             <span className="text-[10px] tracking-[0.3em] font-mono uppercase hidden md:block">Comm_Link</span>
           </a>
         </div>

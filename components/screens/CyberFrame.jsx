@@ -44,14 +44,14 @@ const CyberFrame = ({ children, screenRef: externalRef, accentColor = "#22d3ee",
 
             {/* Cyber-Frame Accents - Top Runner */}
             <div className="absolute top-0 left-[20%] right-[20%] h-[2.5px] opacity-60 transition-all duration-500" style={{ backgroundColor: accent, boxShadow: `0 0 10px ${accent}` }}>
-                <div className="absolute left-0 top-0 h-2 w-px bg-current" />
-                <div className="absolute right-0 top-0 h-2 w-px bg-current" />
+                <div className="absolute left-0 top-0 h-2 w-px bg-cyan-400" />
+                <div className="absolute right-0 top-0 h-2 w-px bg-cyan-400" />
             </div>
 
             {/* Cyber-Frame Accents - Bottom Runner */}
             <div className="absolute bottom-0 left-[20%] right-[20%] h-[2.5px] opacity-60 transition-all duration-500" style={{ backgroundColor: accent, boxShadow: `0 0 10px ${accent}` }}>
-                <div className="absolute left-0 bottom-0 h-2 w-px bg-current" />
-                <div className="absolute right-0 bottom-0 h-2 w-px bg-current" />
+                <div className="absolute left-0 bottom-0 h-2 w-px bg-cyan-400" />
+                <div className="absolute right-0 bottom-0 h-2 w-px bg-cyan-400" />
             </div>
 
             {/* Side Brackets */}

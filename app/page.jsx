@@ -1,7 +1,7 @@
 'use client';
 
 
-import Archive from "./b-127-archive/page";
+import Archive from "./home/page";
 
 
 const App = () => {
