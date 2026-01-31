@@ -17,11 +17,11 @@ import OperationLogs from '@/components/HomePage/OperationLogs';
 const App = () => {
 
   return (
-    <div className="text-zinc-400 selection:bg-yellow-500 selection:text-black">
+    <div className="text-zinc-400 selection:bg-cyan-400 selection:text-black">
 
       <Navbar />
 
-      <div className='relative w-full h-fit -z-10 inset-0'>
+      <div className='relative w-full h-fit inset-0'>
         <Hero />
         <TechArsenals techStack={techStack} />
         <TraningModules education={education} />

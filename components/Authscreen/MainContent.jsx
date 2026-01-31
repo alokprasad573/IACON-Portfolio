@@ -1,14 +1,21 @@
 import { memo } from 'react';
+import { useSystem } from '@/context/SystemContext';
+import { runAuthSequence, redirectToHome } from '@/lib/scripts';
 
 import Header from '@/components/Authscreen/Header';
 import Scanner from '@/components/Authscreen/Scanner';
 import ActionStatus from '@/components/Authscreen/ActionStatus';
 import DetailPanel from '@/components/Authscreen/DetailPanel';
 import Logs from '@/components/Authscreen/Logs';
-import Button from '@/components/Authscreen/Button';
+import Button from '@/components/ui/Button';
 
 
-const MainContent = ({ statusText, isVerified, glyphText, actionLabel, logs, authState, setAuthState, setStatusText, setActionLabel, setGlyphText, addLog, wait, handleClose }) => {
+const MainContent = () => {
+    const {
+        statusText, isVerified, glyphText, actionLabel, logs,
+        authState, setAuthState, setStatusText, setActionLabel, setGlyphText,
+        addLog, wait, handleClose
+    } = useSystem();
 
     return (
         <>
@@ -29,16 +36,32 @@ const MainContent = ({ statusText, isVerified, glyphText, actionLabel, logs, aut
                 {/* Logs */}
                 <Logs logs={logs} />
 
-                {/* Footer Buttons */}
-                <Button
-                    authState={authState}
-                    setAuthState={setAuthState}
-                    setStatusText={setStatusText}
-                    setActionLabel={setActionLabel}
-                    setGlyphText={setGlyphText}
-                    addLog={addLog}
-                    wait={wait}
-                    handleClose={handleClose} />
+                {/* Footer Buttons - Inlined Logic */}
+                {authState === 'VERIFIED' ? (
+                    <Button
+                        variant="neon"
+                        fullWidth
+                        onClick={() => {
+                            handleClose();
+                            setTimeout(() => {
+                                redirectToHome(addLog);
+                            }, 1000);
+                        }}
+                        className="text-cyan-400 border-cyan-400/50"
+                    >
+                        See Detail
+                    </Button>
+                ) : (
+                    <Button
+                        variant="neon"
+                        fullWidth
+                        onClick={() => runAuthSequence(setAuthState, setStatusText, setActionLabel, setGlyphText, addLog, wait)}
+                        disabled={authState === 'SCANNING'}
+                        className={authState === 'SCANNING' ? 'cursor-wait' : ''}
+                    >
+                        {authState === 'SCANNING' ? 'In Progress...' : 'Initiate Protocol'}
+                    </Button>
+                )}
             </div>
         </>
     )

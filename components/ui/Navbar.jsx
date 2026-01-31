@@ -1,10 +1,9 @@
-
-
 import { useRef } from 'react';
 import Image from 'next/image';
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Button from './Button';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -30,22 +29,22 @@ const Navbar = () => {
     }, { scope: navRef });
 
     return (
-        <nav ref={navRef} className="fixed top-0 left-0 w-full bg-black border-b border-yellow-500/10 backdrop-blur-xl z-10">
+        <nav ref={navRef} className="fixed top-0 left-0 w-full bg-[#0a1e2f]/90 border-b border-cyan-400/20 backdrop-blur-xl z-50">
             <div className="max-w-7xl mx-auto px-8 h-20 flex items-center justify-between">
                 {/* Left side Logo */}
                 <div className="flex items-center gap-2">
                     <div className="w-15 h-15 flex items-center justify-center">
-                        <Image src="/images/autobot_V.png" alt="Logo" width={150} height={150} />
+                        <Image src="/images/autobot_V.png" alt="Logo" width={150} height={150} className="brightness-150 contrast-125 saturate-0 sepia hue-rotate-180 text-cyan-400" />
                     </div>
-                    <span className="text-lg font-black tracking-wider text-zinc-300">
+                    <span className="text-lg font-black tracking-wider text-cyan-100">
                         B-127 | ALOK PRASAD
-                        <p className="text-[10px] text-yellow-500 uppercase tracking-[0.5em]">IACON // Sector_7</p>
+                        <p className="text-[10px] text-cyan-400 uppercase tracking-[0.5em]">IACON // Sector_7</p>
                     </span>
                 </div>
                 {/* CenternLinks */}
                 <div className="hidden md:flex items-center gap-8">
                     {[
-                        { name: 'Inbound', href: '#hero' },
+                        { name: 'Inbound', href: '#inbound' },
                         { name: 'Arsenals', href: '#arsenals' },
                         { name: 'Modules', href: '#modules' },
                         { name: 'Operation', href: '#operation' },
@@ -54,7 +53,7 @@ const Navbar = () => {
                         <a
                             key={link.name}
                             href={link.href}
-                            className="text-[12px] font-bold uppercase tracking-[0.2em] text-zinc-400 hover:text-yellow-500 transition-colors"
+                            className="text-[12px] font-bold uppercase tracking-[0.2em] text-cyan-200/60 hover:text-cyan-400 transition-colors"
                         >
                             {link.name}
                         </a>
@@ -63,11 +62,10 @@ const Navbar = () => {
 
                 {/* Right side Comm Links */}
                 <div className="flex items-center">
-                    <button className="px-6 py-2 bg-yellow-500/10 border border-yellow-500/30 text-yellow-500 text-[11px] font-black uppercase tracking-[0.2em] hover:bg-yellow-500 hover:text-black transition-all duration-300">
+                    <Button variant="primary">
                         Comm_Link
-                    </button>
+                    </Button>
                 </div>
-
             </div>
         </nav>
     );
