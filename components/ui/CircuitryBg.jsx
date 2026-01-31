@@ -1,7 +1,7 @@
 'use client'
 
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -74,11 +74,6 @@ const CircuitryBg = () => {
         helper.material.transparent = true;
         scene.add(helper);
 
-        // const ceilingGrid = new THREE.GridHelper(1000, 40, 0x00f2ff, 0x0a2a35);
-        // ceilingGrid.position.y = 100;
-        // ceilingGrid.material.transparent = true;
-        // scene.add(ceilingGrid);
-
         // Floating Particles
         const bitGeom = new THREE.BufferGeometry();
         const bitPos = [];
@@ -94,9 +89,6 @@ const CircuitryBg = () => {
         const animate = () => {
             animationId = requestAnimationFrame(animate);
 
-            circuitGroup.rotation.y += 0.0005;
-
-            // Camera position is now handled by ScrollTrigger
             camera.position.x += (mouse.current.x * 50 - camera.position.x) * 0.05;
             camera.position.y += (-mouse.current.y * 50 - camera.position.y) * 0.05;
             camera.lookAt(0, 0, 0);
@@ -126,31 +118,18 @@ const CircuitryBg = () => {
         // Synchronize Background with Page Scroll
         const bgTl = gsap.timeline({
             scrollTrigger: {
-                trigger: "html", // Use html for more reliable total height
+                trigger: "body",
                 start: "top top",
                 end: "bottom bottom",
-                scrub: 1, // Tighter synchronization
+                scrub: true,
                 invalidateOnRefresh: true,
             }
         });
 
-        // Dive Deep into circuitry (Linear ease is better for 1:1 scroll sync)
-        bgTl.to(camera.position, {
-            z: 10,
-            ease: "none"
-        }, 0);
-
-        // Increase rotation as we descend
-        bgTl.to(circuitGroup.rotation, {
-            y: `+=${Math.PI * 2}`,
-            ease: "none"
-        }, 0);
-
-        // Vertical Parallax
-        bgTl.to(circuitGroup.position, {
-            y: 50,
-            ease: "none"
-        }, 0);
+        // Global Depth/Rotation Tunnels
+        bgTl.to(camera.position, { z: 5, ease: "none" }, 0);
+        bgTl.to(circuitGroup.rotation, { y: `+=${Math.PI * 4}`, ease: "none" }, 0);
+        bgTl.to(circuitGroup.position, { y: 50, ease: "none" }, 0);
 
         return () => {
             cancelAnimationFrame(animationId);
@@ -167,24 +146,6 @@ const CircuitryBg = () => {
         <div className="relative w-full h-screen bg-[#020508] overflow-hidden select-none">
             {/* Three.js Canvas Container */}
             <div ref={mountRef} className="absolute inset-0 z-0" />
-
-            {/* UI Overlay Layer */}
-            <div className="absolute inset-0 z-10 p-6 flex flex-col justify-between pointer-events-none text-[#00f2ff] font-mono uppercase">
-
-
-
-                {/* Scroll Indicator */}
-                <div className="absolute right-5 top-1/2 -translate-y-1/2 flex flex-col items-center gap-3 opacity-40">
-                    <div className="text-[8px] [writing-mode:vertical-lr]">ZOOM</div>
-                    <div className="w-[20px] h-[30px] border-2 border-[#00f2ff] rounded-full relative">
-                        <div className="w-0.5 h-1.5 bg-[#00f2ff] absolute left-1/2 -translate-x-1/2 top-1.5 animate-bounce" />
-                    </div>
-                </div>
-
-
-
-            </div>
-            {/* <div className="scan-line" /> */}
         </div>
     );
 };

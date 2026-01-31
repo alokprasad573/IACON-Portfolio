@@ -22,7 +22,7 @@ const TraningModules = ({ education, index }) => {
                                     <Package size={20} />
                                     <span className="text-[12px] tracking-[0.2em] uppercase opacity-70">Module_0{education.length - index}</span>
                                 </div>
-                                <div className="text-[9px] text-cyan-400/80 border border-cyan-400/30 px-2 py-0.5 rounded-sm animate-pulse font-mono">
+                                <div className="text-[9px] text-cyan-400/80 border border-cyan-400/30 px-2 py-0.5 rounded-sm font-mono">
                                     {edu.type === "college" ? "IN-PROGRESS" : "COMPLETED"}
                                 </div>
                             </div>

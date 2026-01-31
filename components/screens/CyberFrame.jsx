@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useRef } from 'react';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
 
 /**
  * Unified CyberFrame Component
@@ -13,22 +11,12 @@ import gsap from 'gsap';
  * @param {string} [props.accentColor="#22d3ee"] - Main theme color.
  * @param {number|string} [props.glowLevel=30] - Intensity of the outer glow.
  * @param {string} [props.className] - Additional classes.
+ * @param {boolean} [props.noatmo=false] - If true, disables the entrance animation (useful for Hero elements).
  */
-const CyberFrame = ({ children, screenRef: externalRef, accentColor = "#22d3ee", glowLevel = 30, className = "" }) => {
+const CyberFrame = ({ children, screenRef: externalRef, accentColor = "#22d3ee", glowLevel = 30, className = "", noatmo = false }) => {
     const internalRef = useRef(null);
-    // Use external ref if provided (Auth context), otherwise use internal ref (Portfolio cards)
     const ref = externalRef || internalRef;
     const accent = accentColor || "#22d3ee";
-
-    useGSAP(() => {
-        // Only run self-animation if no external ref is provided (i.e., acting as a standalone card)
-        if (!externalRef) {
-            gsap.fromTo(ref.current,
-                { opacity: 0, scale: 0.95 },
-                { opacity: 1, scale: 1, duration: 0.8, ease: "power2.out" }
-            );
-        }
-    }, { scope: ref, dependencies: [externalRef] });
 
     return (
         <section
@@ -75,7 +63,7 @@ const CyberFrame = ({ children, screenRef: externalRef, accentColor = "#22d3ee",
             </div>
 
             {/* Inner Shadow Overlay (on Hover) */}
-<div className="absolute inset-0 pointer-events-none opacity-0 group-hover/frame:opacity-100 transition-opacity duration-300 shadow-inner" />
+            <div className="absolute inset-0 pointer-events-none opacity-0 group-hover/frame:opacity-100 transition-opacity duration-300 shadow-inner" />
         </section>
     );
 };

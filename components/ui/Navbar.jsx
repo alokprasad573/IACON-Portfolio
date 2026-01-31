@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react';
 import Image from 'next/image';
+import { Menu, X } from 'lucide-react';
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Menu, X } from 'lucide-react';
 import Button from './Button';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -16,23 +16,32 @@ const Navbar = () => {
         { name: 'Inbound', href: '#inbound' },
         { name: 'Arsenals', href: '#arsenals' },
         { name: 'Modules', href: '#modules' },
-        { name: 'Operation', href: '#operation' },
         { name: 'Clearences', href: '#clearences' },
+        { name: 'Operation', href: '#operation' },
     ];
 
     useGSAP(() => {
-        gsap.set(navRef.current, { yPercent: -100 });
+        // Hide navbar by default
+        gsap.set(navRef.current, { yPercent: -100, opacity: 0 });
 
+        // Show navbar when scrolling down past a threshold
         ScrollTrigger.create({
-            start: "top top",
-            end: 99999,
+            start: "top -100", // Start showing when we've scrolled down 100px
             onUpdate: (self) => {
-                const shouldShow = self.scroll() > 100;
-                gsap.to(navRef.current, {
-                    yPercent: shouldShow ? 0 : -100,
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
+                if (self.direction === 1) {
+                    // Scrolling down - keep it hidden or show if passed threshold
+                    if (self.scroll() > 500) {
+                        gsap.to(navRef.current, { yPercent: 0, opacity: 1, duration: 0.4, ease: "power2.out" });
+                    }
+                } else {
+                    // Scrolling up - show it
+                    if (self.scroll() > 100) {
+                        gsap.to(navRef.current, { yPercent: 0, opacity: 1, duration: 0.4, ease: "power2.out" });
+                    } else {
+                        // Back at top - hide it
+                        gsap.to(navRef.current, { yPercent: -100, opacity: 0, duration: 0.4, ease: "power2.in" });
+                    }
+                }
             }
         });
     }, { scope: navRef });

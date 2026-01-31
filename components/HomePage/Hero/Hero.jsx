@@ -1,28 +1,8 @@
 import { useRef } from "react";
-import { FolderArchive, Waypoints, Mail, ChevronsDown, Shield, Cpu, BookOpen, Layers, Terminal } from "lucide-react";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import { FolderArchive, Waypoints, Mail, ChevronsDown, Shield, Cpu, BookOpen, Layers } from "lucide-react";
 
 const Hero = () => {
   const containerRef = useRef(null);
-  const tacticalRef = useRef(null);
-
-  useGSAP(() => {
-    // Fade out Tactical Overview on scroll
-    gsap.to(tacticalRef.current, {
-      opacity: 0,
-      scale: 0.9,
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "30% top",
-        scrub: true,
-      }
-    });
-  }, { scope: containerRef });
 
   return (
     <section
@@ -32,14 +12,14 @@ const Hero = () => {
     >
       {/* --- TOP STATUS INDICATOR --- */}
       <div className="mb-8 inline-flex items-center gap-2 border border-cyan-400/20 px-4 py-1 rounded-full bg-cyan-400/5 backdrop-blur-md z-10">
-        <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-ping"></div>
+        <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full"></div>
         <span className="text-[12px] font-mono tracking-widest uppercase text-cyan-400 font-bold">
           IACON DATA STREAM : ACTIVE
         </span>
       </div>
 
       {/* --- MAIN TITLES (RESTORED STYLING) --- */}
-      <div className="scroll-shrink relative z-10">
+      <div className="relative z-10">
         <h1 className="text-6xl text-cyan-400 leading-[0.9] tracking-tighter uppercase font-black">
           Forged In Code <br />
           <span className="text-transparent" style={{ WebkitTextStroke: '2px #22d3ee' }}>
@@ -55,7 +35,7 @@ const Hero = () => {
 
         {/* --- MISSION STATEMENT --- */}
         <div className="mt-10 flex flex-wrap justify-center">
-          <div className="border-l-2 border-cyan-400/30 pl-6 py-1">
+          <div className="border-l-2 bg-cyan-950/15 border-cyan-400/30 pl-6 py-1">
             <p className="text-start text-[15px] text-cyan-200 leading-relaxed font-mono">
               "I am Alok, a Cyber-Engineer specializing in AI and Machine Learning. <br />
               From the halls of Rungta Tech to the global digital grid, my mission <br />
@@ -65,12 +45,8 @@ const Hero = () => {
         </div>
 
         {/* --- TACTICAL OVERVIEW (CONNECTED NAVIGATION) --- */}
-        <div ref={tacticalRef} className="mt-12 hidden md:grid grid-cols-5 gap-4 max-w-4xl mx-auto border-y border-cyan-400/10 py-6">
-          <a href="#inbound" className="flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-110">
-            <Terminal size={18} className="text-cyan-400" />
-            <span className="text-[9px] tracking-[0.2em] text-cyan-600 uppercase">Protocol 01</span>
-            <span className="text-[10px] tracking-widest text-cyan-200 font-bold uppercase">Inbound</span>
-          </a>
+        <div className="mt-12  bg-cyan-950/15 hidden md:grid grid-cols-4 gap-4 max-w-2xl mx-auto border-y border-cyan-400/10 py-6">
+
           <a href="#arsenals" className="flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-110 border-l border-cyan-400/10">
             <Cpu size={18} className="text-cyan-400" />
             <span className="text-[9px] tracking-[0.2em] text-cyan-600 uppercase">Protocol 02</span>
@@ -81,15 +57,15 @@ const Hero = () => {
             <span className="text-[9px] tracking-[0.2em] text-cyan-600 uppercase">Protocol 03</span>
             <span className="text-[10px] tracking-widest text-cyan-200 font-bold uppercase">Modules</span>
           </a>
-          <a href="#operation" className="flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-110 border-l border-cyan-400/10">
-            <Layers size={18} className="text-cyan-400" />
-            <span className="text-[9px] tracking-[0.2em] text-cyan-600 uppercase">Protocol 04</span>
-            <span className="text-[10px] tracking-widest text-cyan-200 font-bold uppercase">Operation</span>
-          </a>
           <a href="#clearences" className="flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-110 border-l border-cyan-400/10">
             <Shield size={18} className="text-cyan-400" />
             <span className="text-[9px] tracking-[0.2em] text-cyan-600 uppercase">Protocol 05</span>
             <span className="text-[10px] tracking-widest text-cyan-200 font-bold uppercase">Clearances</span>
+          </a>
+          <a href="#operation" className="flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-110 border-l border-cyan-400/10">
+            <Layers size={18} className="text-cyan-400" />
+            <span className="text-[9px] tracking-[0.2em] text-cyan-600 uppercase">Protocol 04</span>
+            <span className="text-[10px] tracking-widest text-cyan-200 font-bold uppercase">Operation</span>
           </a>
         </div>
 
@@ -113,7 +89,7 @@ const Hero = () => {
 
         {/* --- SCROLL INDICATOR --- */}
         <a href="#arsenals" className="mt-16 flex flex-col items-center gap-4 relative z-10 group cursor-pointer transition-all duration-300 hover:scale-110">
-          <ChevronsDown size={28} className="text-cyan-400 animate-bounce" />
+          <ChevronsDown size={28} className="text-cyan-400" />
           <span className="text-[11px] tracking-[0.5em] font-mono uppercase text-cyan-600 group-hover:text-cyan-400 transition-colors">
             Initiate_Descent
           </span>

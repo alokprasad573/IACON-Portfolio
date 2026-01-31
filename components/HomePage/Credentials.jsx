@@ -51,48 +51,12 @@ const Credentials = ({ certifications, index }) => {
                 >
                   <FileCheck size={20} /> View_Certificate
                 </a>
-                <span className="text-[10px] text-green-500/60 font-mono">VERIFIED</span>
+                <span className="text-[10px] text-cyan-400 font-mono">VERIFIED</span>
               </div>
             </CyberFrame>
           ))}
         </div>
-        {/* Footer */}
-        <div className="w-full mt-75 relative flex justify-center items-end pb-2 pointer-events-auto">
-          {/* Left HUD */}
-          <div className="absolute bottom-0 left-0 tracking-[0.4em] text-[12px] text-cyan-500/50 opacity-50 hidden md:block">
-            Autobot Comd Center // IACON
-          </div>
-
-          {/* Center Links */}
-          <div className="flex flex-col gap-3 items-center justify-center font-black uppercase text-[10px] tracking-[0.3em] text-gray-500">
-            <div className="flex gap-6">
-              {[
-                { name: "Archive", url: "https://github.com/alokprasad573" },
-                { name: "SparkConnect", url: "https://www.linkedin.com/in/alok-prasad-474962289/" },
-                { name: "Email", url: "#" },
-              ].map((link) => (
-                <a
-                  key={link.name}
-                  href={link.url}
-                  className="relative group transition-all duration-300 hover:text-cyan-400 hover:scale-110"
-                >
-                  {link.name}
-                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-cyan-400 shadow-[0_0_8px_#22d3ee] group-hover:w-full transition-all duration-500"></span>
-                </a>
-              ))}
-            </div>
-
-            <p className="text-cyan-400/20 text-[12px] tracking-[0.4em] uppercase animate-pulse">
-              End Of Transmission // ©2027
-            </p>
-          </div>
-
-          {/* Right HUD */}
-          <div className="absolute bottom-0 right-0 flex items-center gap-2 tracking-[0.4em] text-[12px] text-cyan-500/50 opacity-50 md:flex">
-            <Activity size={12} className="animate-pulse" />
-            <span>CYBRTRN OS V4.2.6</span>
-          </div>
-        </div>
+        
       </div>
     </section>
   );

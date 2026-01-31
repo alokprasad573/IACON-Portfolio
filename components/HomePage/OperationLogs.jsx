@@ -1,177 +1,181 @@
 import CyberFrame from "@/components/screens/CyberFrame";
 import Image from "next/image";
-import { Github, ExternalLink, Terminal, ChevronLeft, ChevronRight } from "lucide-react";
-import { useState, useCallback, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Github, ExternalLink, Activity, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import Button from "../ui/Button";
 
 const OperationLogs = ({ projects }) => {
     const [index, setIndex] = useState(0);
-    const [direction, setDirection] = useState(0);
-    const [isHovered, setIsHovered] = useState(false);
     const [selectedProject, setSelectedProject] = useState(null);
+    const [visibleCount, setVisibleCount] = useState(3);
+    const containerRef = useRef(null);
+
+    // Drag and Sliding logic
+    const x = useMotionValue(0);
+    const springX = useSpring(x, { damping: 30, stiffness: 150 });
 
     const next = useCallback(() => {
-        setDirection(1);
-        setIndex((prev) => (prev + 1) % projects.length);
-    }, [projects.length]);
+        setIndex((prev) => Math.min(prev + 1, projects.length - visibleCount));
+    }, [projects.length, visibleCount]);
 
     const prev = useCallback(() => {
-        setDirection(-1);
-        setIndex((prev) => (prev - 1 + projects.length) % projects.length);
-    }, [projects.length]);
+        setIndex((prev) => Math.max(prev - 1, 0));
+    }, []);
 
-    // Calculate visible projects (wrapping around for seamless loop)
-    const getVisibleProjects = () => {
-        const items = [];
-        for (let i = 0; i < 3; i++) {
-            items.push(projects[(index + i) % projects.length]);
+    // Responsive visibility count
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 768) setVisibleCount(1);
+            else if (window.innerWidth < 1024) setVisibleCount(2);
+            else setVisibleCount(3);
+        };
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    // Keyboard synchronization
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (selectedProject) return; // Don't navigate when modal is open
+            if (e.key === 'ArrowRight') next();
+            if (e.key === 'ArrowLeft') prev();
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [next, prev, selectedProject]);
+
+    // Update position based on index
+    useEffect(() => {
+        if (containerRef.current) {
+            const containerWidth = containerRef.current.offsetWidth;
+            const gap = 24;
+            const cardWidth = (containerWidth - (visibleCount - 1) * gap) / visibleCount;
+            x.set(-index * (cardWidth + gap));
         }
-        return items;
-    };
+    }, [index, visibleCount, x]);
 
     return (
-        <section id="operation" className="w-full min-h-screen px-6 py-12 md:px-12 md:py-20 overflow-hidden">
+        <section id="operation" className="w-full min-h-screen px-6 py-12 md:px-12 md:py-20 overflow-hidden relative">
             <div className="w-full flex flex-col h-full">
-                {/* Section Header - Consistent with Training Modules & Tech Arsenals */}
+                {/* Section Header */}
                 <div className="mb-12 shrink-0 flex justify-between items-end">
                     <div>
                         <h2 className="text-4xl md:text-6xl text-cyan-200 mb-2 font-black italic">Operation History</h2>
-                        <p className="text-cyan-400 text-xs my-2 tracking-[0.2em] font-bold uppercase opacity-80">Mission Archives // Vector_Sigma</p>
+                        <p className="text-cyan-400 text-xs my-2 tracking-[0.2em] font-bold uppercase opacity-80">Operations Archives // Vector_Sigma</p>
                         <div className="h-1 w-24 bg-cyan-400 shadow-[0_0_15px_#22d3ee]"></div>
                     </div>
 
-                    {/* Navigation Controls - Styled with primary Button component */}
+                    {/* Navigation Buttons (Desktop) */}
                     <div className="hidden md:flex gap-4">
-                        <Button
+                        <button
                             onClick={prev}
-                            variant="primary"
-                            className="px-4!"
+                            disabled={index === 0}
+                            className={`p-3 flex items-center gap-2 border border-cyan-400/20 bg-cyan-400/5 text-cyan-400 transition-all ${index === 0 ? 'opacity-20 cursor-not-allowed' : 'hover:bg-cyan-400/10 hover:border-cyan-400'}`}
                         >
-                            <ChevronLeft size={16} /> Prev_Log
-                        </Button>
-                        <Button
+                            <ChevronLeft size={24} /> <span className="uppercase">Prev</span>
+                        </button>
+                        <button
                             onClick={next}
-                            variant="primary"
-                            className="px-4!"
+                            disabled={index >= projects.length - visibleCount}
+                            className={`p-3 flex items-center gap-2 border border-cyan-400/20 bg-cyan-400/5 text-cyan-400 transition-all ${index >= projects.length - visibleCount ? 'opacity-20 cursor-not-allowed' : 'hover:bg-cyan-400/10 hover:border-cyan-400'}`}
                         >
-                            Next_Log <ChevronRight size={16} />
-                        </Button>
+                            <span className="uppercase">Next</span> <ChevronRight size={24} />
+                        </button>
                     </div>
                 </div>
 
-                {/* Multi-Card Carousel Grid Area */}
-                <div
-                    className="relative w-full overflow-visible py-4"
-                    onMouseEnter={() => setIsHovered(true)}
-                    onMouseLeave={() => setIsHovered(false)}
-                >
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full relative min-h-[550px]">
-                        <AnimatePresence mode="popLayout" initial={false} custom={direction}>
-                            {getVisibleProjects().map((proj, i) => (
-                                <motion.div
-                                    key={`${proj.title}-${(index + i) % projects.length}`}
-                                    custom={direction}
-                                    initial={{
-                                        opacity: 0,
-                                        x: direction > 0 ? 100 : -100,
-                                        scale: 0.9
-                                    }}
-                                    animate={{
-                                        opacity: 1,
-                                        x: 0,
-                                        scale: 1
-                                    }}
-                                    exit={{
-                                        opacity: 0,
-                                        x: direction > 0 ? -100 : 100,
-                                        scale: 0.9
-                                    }}
-                                    transition={{
-                                        type: "spring",
-                                        stiffness: 260,
-                                        damping: 20
-                                    }}
-                                    className="h-full cursor-pointer"
-                                    onClick={() => setSelectedProject(proj)}
-                                >
-                                    <CyberFrame className="h-[550px] px-12 py-10 flex flex-col bg-cyan-950/20 hover:bg-cyan-950/30 transition-all duration-500 active:scale-[0.98]">
-                                        {/* Header: Consistent with Training Modules */}
-                                        <div className="flex items-center justify-between gap-3 text-cyan-400/60 mb-4">
-                                            <div className="flex items-center gap-3">
-                                                <span className="text-[12px] tracking-[0.2em] uppercase opacity-70">Operation_0{projects.indexOf(proj) + 1}</span>
+                {/* Sliding Track Viewport */}
+                <div ref={containerRef} className="relative w-full py-4">
+                    <motion.div
+                        className="flex gap-6"
+                        style={{ x: springX }}
+                    >
+                        {projects.map((proj, i) => (
+                            <div
+                                key={`${proj.title}-${i}`}
+                                className="shrink-0 transition-all duration-500"
+                                style={{
+                                    width: `calc((100% - ${(visibleCount - 1) * 24}px) / ${visibleCount})`,
+                                    opacity: (i >= index && i < index + visibleCount) ? 1 : 0.3,
+                                    scale: (i >= index && i < index + visibleCount) ? 1 : 0.95
+                                }}
+                                onClick={() => setSelectedProject({ ...proj, displayId: i })}
+                            >
+                                <CyberFrame noatmo={true} className="h-[550px] px-8 py-10 flex flex-col bg-cyan-950/20 hover:bg-cyan-950/30 cursor-pointer hover:border-cyan-400/50 group/card">
+                                    <div className="flex items-center justify-between gap-3 text-cyan-400/60 mb-4 font-mono">
+                                        <span className="text-[10px] tracking-[0.2em] uppercase opacity-70">Log_Session_0{i + 1}</span>
+                                        <div className="text-[9px] text-cyan-400/80 border border-cyan-400/30 px-2 py-0.5 rounded-sm uppercase">
+                                            {proj.deployStatus || "ACTIVE"}
+                                        </div>
+                                    </div>
+
+                                    <div className="flex-1 flex flex-col pt-2">
+                                        <h4 className="text-lg text-cyan-100 font-black leading-tight border-b border-cyan-400/20 pb-4 mb-4 h-16 flex items-center uppercase tracking-tight">
+                                            {proj.title}
+                                        </h4>
+
+                                        <div className="flex-1 flex flex-col gap-4">
+                                            <div className="relative w-full aspect-video border border-cyan-400/10 overflow-hidden bg-black/40 transition-all duration-500">
+                                                <Image
+                                                    src={proj.image}
+                                                    alt={proj.title}
+                                                    fill
+                                                    className="object-cover opacity-60 group-hover/card:opacity-100 transition-all duration-700 group-hover/card:scale-105"
+                                                    sizes="(max-width: 768px) 100vw, 33vw"
+                                                />
                                             </div>
-                                            <div className="text-[9px] text-cyan-400/80 border border-cyan-400/30 px-2 py-0.5 rounded-sm animate-pulse font-mono uppercase">
-                                                {proj.deployStatus || "ACTIVE"}
-                                            </div>
+                                            <p className="text-[11px] text-cyan-100/60 leading-relaxed line-clamp-4 font-medium italic">
+                                                {proj.description}
+                                            </p>
                                         </div>
 
-                                        <div className="flex-1 flex flex-col py-4">
-                                            {/* Title: Consistent border-b and padding */}
-                                            <h4 className="text-xl text-cyan-100 font-black leading-tight border-b border-cyan-400/20 pb-4 mb-4 h-16 flex items-center">
-                                                {proj.title}
-                                            </h4>
-
-                                            <div className="flex-1 flex flex-col gap-4">
-                                                {/* Image Display */}
-                                                <div className="relative w-full aspect-video border border-cyan-400/10 overflow-hidden bg-black/40 group-hover:border-cyan-400/30 transition-all duration-500">
-                                                    <Image
-                                                        src={proj.image}
-                                                        alt={proj.title}
-                                                        fill
-                                                        className="object-cover opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-1000"
-                                                        sizes="(max-width: 768px) 100vw, 33vw"
-                                                    />
-                                                    <div className="absolute inset-0 bg-cyan-400/5 mix-blend-overlay pointer-events-none" />
-                                                </div>
-
-                                                {/* Description */}
-                                                <p className="text-xs text-cyan-100/60 leading-relaxed line-clamp-3 font-medium">
-                                                    {proj.description}
-                                                </p>
+                                        <div className="grid grid-cols-2 gap-4 pt-4 border-t border-cyan-400/10 mt-2">
+                                            <div className="flex flex-col">
+                                                <span className="text-[8px] uppercase font-bold text-cyan-400/30 mb-1 tracking-widest">Entry_Point</span>
+                                                <span className="text-[9px] font-bold text-cyan-400 uppercase tracking-widest">Local_Archive</span>
                                             </div>
-
-                                            {/* Action Links - Consistent bottom layout */}
-                                            <div className="grid grid-cols-2 gap-4 py-4 border-t border-cyan-400/10 mt-2">
-                                                <div>
-                                                    <div className="text-[9px] uppercase font-bold text-cyan-400/40 mb-1 tracking-widest">Archive</div>
-                                                    <a
-                                                        href={proj.github}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        onClick={(e) => e.stopPropagation()}
-                                                        className="flex items-center gap-2 text-[10px] font-bold text-cyan-400 hover:text-white transition-colors uppercase tracking-[0.2em]"
-                                                    >
-                                                        <Github size={14} /> Source
-                                                    </a>
-                                                </div>
-                                                <div className="text-right">
-                                                    <div className="text-[9px] uppercase font-bold text-cyan-400/40 mb-1 tracking-widest">Uplink</div>
-                                                    <a
-                                                        href={proj.link}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        onClick={(e) => e.stopPropagation()}
-                                                        className="flex items-center justify-end gap-2 text-[10px] font-bold text-cyan-400 hover:text-white transition-colors uppercase tracking-[0.2em]"
-                                                    >
-                                                        Link <ExternalLink size={14} />
-                                                    </a>
-                                                </div>
+                                            <div className="text-right flex flex-col">
+                                                <span className="text-[8px] uppercase font-bold text-cyan-400/30 mb-1 tracking-widest">Sync_Status</span>
+                                                <span className="text-[9px] font-bold text-cyan-100 uppercase tracking-widest">Synchronized</span>
                                             </div>
                                         </div>
-                                    </CyberFrame>
-                                </motion.div>
-                            ))}
-                        </AnimatePresence>
-                    </div>
+                                    </div>
+                                </CyberFrame>
+                            </div>
+                        ))}
+                    </motion.div>
                 </div>
 
-                {/* Bottom Navigation HUD - Centered beneath the grid */}
-                <div className="w-full flex justify-center items-center my-2 opacity-60 hover:opacity-100 transition-all duration-500">
+                {/* Progress HUD & Mobile Nav */}
+                <div className="w-full flex flex-col items-center gap-6 mt-8">
                     <div className="flex items-baseline gap-4 font-black italic">
                         <span className="text-cyan-400 text-3xl">{String(index + 1).padStart(2, '0')}</span>
                         <span className="text-cyan-400/20 text-xl">/</span>
                         <span className="text-cyan-400/40 text-sm tracking-widest">{String(projects.length).padStart(2, '0')}</span>
+                    </div>
+
+                    {/* Mobile Only Buttons */}
+                    <div className="flex md:hidden gap-8">
+                        <button onClick={prev} disabled={index === 0} className="text-cyan-400 disabled:opacity-20"><ChevronLeft size={32} /></button>
+                        <button onClick={next} disabled={index >= projects.length - visibleCount} className="text-cyan-400 disabled:opacity-20"><ChevronRight size={32} /></button>
+                    </div>
+                </div>
+
+                {/* Section Footer */}
+                <div className="w-full relative mt-auto pt-8 flex justify-center items-end pb-4 border-t border-cyan-400/5">
+                    <div className="absolute bottom-4 left-0 tracking-[0.4em] text-[10px] text-cyan-500/30 hidden md:block uppercase font-bold">
+                        Archive_Access_Verified
+                    </div>
+                    <div className="flex flex-col gap-2 items-center justify-center">
+                        <p className="text-cyan-400/10 text-[10px] tracking-[0.6em] uppercase font-black">
+                            End Of Transmission // PROTOCOL_SIGMA
+                        </p>
+                    </div>
+                    <div className="absolute bottom-4 right-0 flex items-center gap-2 tracking-[0.4em] text-[10px] text-cyan-500/30 md:flex font-bold">
+                        <Activity size={12} />
+                        <span>TRANS-COMP V4</span>
                     </div>
                 </div>
             </div>
@@ -185,78 +189,58 @@ const OperationLogs = ({ projects }) => {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setSelectedProject(null)}
-                            className="absolute inset-0 bg-black/80 backdrop-blur-md cursor-pointer"
+                            className="absolute inset-0 bg-black/95 backdrop-blur-xl cursor-pointer"
                         />
-
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                            className="relative w-full max-w-4xl z-10 pointer-events-auto"
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
+                            className="relative w-full max-w-4xl z-10"
                         >
-                            <CyberFrame className="w-full bg-black/95 p-8 md:p-12 overflow-y-auto max-h-[90vh]">
-                                {/* Close Button */}
-
-
+                            <CyberFrame noatmo={true} className="w-full bg-black/80 p-8 md:p-12 overflow-y-auto max-h-[90vh]">
                                 <div className="flex flex-col gap-8">
                                     <div className="flex items-center justify-between border-b border-cyan-400/20 pb-6">
-                                        <div className="flex items-center gap-3 text-cyan-400/60 mb-2">
-                                            <span className="text-xs tracking-[0.4em] uppercase font-bold">Project_Data_Packet</span>
-                                            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+                                        <div className="flex items-center gap-3">
+                                            <span className="text-xs tracking-[0.4em] uppercase font-bold text-cyan-400/60">Operation_{selectedProject.displayId + 1} Archive</span>
+                                            <div className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_10px_#22d3ee] animate-pulse" />
                                         </div>
                                         <Button
                                             onClick={() => setSelectedProject(null)}
-                                            className="w-fit h-fit p-2 text-cyan-400 hover:text-black transition-colors">
+                                            variant="primary"
+                                            className="px-6!"
+                                        >
                                             Close
                                         </Button>
-                                        
                                     </div>
-                                    <h3 className="text-4xl md:text-5xl text-white font-black italic uppercase tracking-tighter leading-none">
-                                            {selectedProject.title}
-                                        </h3>
-
+                                    <h3 className="text-4xl md:text-5xl text-white font-black italic uppercase tracking-tighter">
+                                        {selectedProject.title}
+                                    </h3>
                                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                                        <div className="relative aspect-video w-full border border-cyan-400/20 overflow-hidden bg-black shadow-[0_0_30px_rgba(34,211,238,0.1)]">
-                                            <Image
-                                                src={selectedProject.image}
-                                                alt={selectedProject.title}
-                                                fill
-                                                className="object-cover"
-                                            />
-                                            <div className="absolute inset-0 bg-cyan-400/5 mix-blend-overlay" />
+                                        <div className="relative aspect-video w-full border border-cyan-400/20 overflow-hidden bg-black shadow-[0_0_50px_rgba(34,211,238,0.2)]">
+                                            <Image src={selectedProject.image} alt={selectedProject.title} fill className="object-cover" />
                                         </div>
-
                                         <div className="flex flex-col gap-6">
                                             <div>
-                                                <span className="text-[10px] text-cyan-400 font-bold tracking-[0.3em] uppercase mb-2 block">Technical_Summary</span>
-                                                <p className="text-cyan-100/80 text-sm md:text-base leading-relaxed font-medium">
-                                                    {selectedProject.description}
-                                                </p>
+                                                <span className="text-[10px] text-cyan-400 font-bold tracking-[0.3em] uppercase mb-2 block border-l-2 border-cyan-400 pl-2">Objective Summary</span>
+                                                <p className="text-cyan-100/80 text-sm leading-relaxed font-medium font-mono">{selectedProject.description}</p>
                                             </div>
-
                                             {selectedProject.stack && (
                                                 <div>
-                                                    <span className="text-[10px] text-cyan-400 font-bold tracking-[0.3em] uppercase mb-3 block">Weaponry_Specs</span>
+                                                    <span className="text-[10px] text-cyan-400 font-bold tracking-[0.3em] uppercase mb-3 block border-l-2 border-cyan-400 pl-2">Arsenal Configuration</span>
                                                     <div className="flex flex-wrap gap-2">
                                                         {selectedProject.stack.map(tag => (
-                                                            <span key={tag} className="text-[10px] uppercase font-bold tracking-widest px-3 py-1 bg-cyan-400/10 border border-cyan-400/20 text-cyan-300">
+                                                            <span key={tag} className="text-[9px] uppercase font-bold tracking-widest px-3 py-1 bg-cyan-400/10 border border-cyan-400/30 text-cyan-300">
                                                                 {tag}
                                                             </span>
                                                         ))}
                                                     </div>
                                                 </div>
                                             )}
-
-                                            <div className="mt-4 flex gap-6">
-                                                <Button href={selectedProject.github} variant="primary" className="flex-1">Source_Code</Button>
-                                                <Button href={selectedProject.link} variant="secondary" className="flex-1">Live_Uplink</Button>
+                                            <div className="mt-4 flex gap-4">
+                                                <Button href={selectedProject.github} variant="primary" className="flex-1 uppercase tracking-[0.2em] font-black">Archive</Button>
+                                                <Button href={selectedProject.link} variant="secondary" className="flex-1 uppercase tracking-[0.2em] font-black">Uplink</Button>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div className="pt-6 border-t border-cyan-400/10 flex justify-between items-center text-[12px] tracking-wider text-cyan-400/40 font-mono italic">
-                                        <span>INITIATED_CONNECTION: 0x{Math.random().toString(16).slice(2, 8).toUpperCase()}</span>
-                                        <span>STATUS: {selectedProject.deployStatus || "ARCHIVED"}</span>
                                     </div>
                                 </div>
                             </CyberFrame>
